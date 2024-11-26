@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+    <section class="banner d-flex justify-content-center align-items-center">
+
+        <div class="text-center">
+            <h1 class="text-center font-weight-bolder fs-10">SmartConnect</h1>
+            <p class="fs-3 mt-10">Your Smart Way to Stay Connected.</p>
+            <button type="button" class="btn bg-color-primary btn-sm">
+                <a class="text-white" th:href="@{/signup}">Get Started</a>
+            </button>
+        </div>
+
+
+
+
+    </section>
+
+
+</body>
+</html>
