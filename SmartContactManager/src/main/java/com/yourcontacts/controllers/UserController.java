@@ -11,8 +11,6 @@ public class UserController {
 
     @GetMapping("/index")
     public String dashboard(){
-
-
         return "user/user_dashboard";
     }
 }

@@ -28,10 +28,7 @@ public class User {
     private String user_email;
 
 
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-            message = "Password must contain at least one uppercase letter, " +
-                    "one lowercase letter, one digit, one special character, " +
-                    "and be at least 8 characters long.")
+    
     private String user_password;
 
 
