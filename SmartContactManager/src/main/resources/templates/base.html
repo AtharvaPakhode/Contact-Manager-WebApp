@@ -11,6 +11,7 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" th:href ="@{/css/style.css}">
+    <link rel="stylesheet" th:href ="@{/css/loginStyle.css}">
     <title th:text="${title}">Base</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
                 <ul class="navbar-nav ms-auto"> <!-- Use ml-auto to align items to the right -->
                     <li><a class="nav-link text-white" th:href="@{/home}">HOME</a></li>
                     <li><a class="nav-link text-white" th:href="@{/about}">ABOUT</a></li>
-                    <li><a class="nav-link text-white" th:href="@{/login}">LOGIN</a></li>
+                    <li><a class="nav-link text-white" th:href="@{/signin}">LOGIN</a></li>
                     <li><a class="nav-link text-white" th:href="@{/signup}">SIGN UP</a></li>
                 </ul>
             </div>

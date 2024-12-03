@@ -17,7 +17,8 @@ import javax.validation.Valid;
 @Controller
 public class URLController {
 
-
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepo ;
@@ -68,12 +69,21 @@ public class URLController {
 
 
             // Set other user properties
-            user.setUser_role("USER");
+            user.setUser_role("ROLE_USER");
             user.setStatus(true);
             user.setImageURL("default.png");
 
+            System.out.println(user.getUser_password());
+
+            //set the encrypted password
+            user.setUser_password(passwordEncoder.encode(user.getUser_password()));
+
+            System.out.println(user.getUser_password());
+
             // Save the user
             User saved_user = this.userRepo.save(user);
+
+
             model.addAttribute("user", user);
             session.setAttribute("message", new Message("Successfully Registered - Click on login button to proceed", "alert-success"));
 
@@ -86,5 +96,14 @@ public class URLController {
 
         return "signup";
     }
+
+
+    @GetMapping("/signin")
+    public String customLogin(Model model){
+        model.addAttribute("title" ,"login");
+        return "login";
+    }
+
+
 
 }
