@@ -3,17 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+
+
+
 </head>
 <body>
 
-<section class="banner d-flex justify-content-center align-items-center">
+<section>
 
-    this is user dashboard
+    <div class="content-area-user-dashboard">
+        <span>
+            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
+        </span>
+
+        <!-- SIDE BAR -->
+        <div id="sidebarMenu" class=" sidebar bg-white ">
+            <!-- Close Button -->
+            <span onclick="toggleSideBar()"  class="crsbtn">
+                <i class="fa fa-close" style="font-size:18px"></i>
+            </span>
+
+            <div class="position-sticky">
+
+                <div class="list-group list-group-flush mx-3 mt-4">
+
+                    <!-- Home -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <i class="fas fa-home fa-fw me-3"></i><span>Home</span>
+                    </a>
+                    <!-- Add Contact -->
+                    <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
+                    </a>
+                    <!-- View Contacts -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
+                    </a>
+                    <!-- Profile -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
+                    </a>
+                    <!-- Settings -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
+                    </a>
+                    <!-- Logout -->
+                    <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END SIDE BAR -->
+
+    </div>
+
 
 
 
 
 </section>
+
+
 
 
 </body>

@@ -1,32 +1,145 @@
 
-body{
-    background: #e2e2e2
+/* background styles */
+
+body {
+    background: #e2e2e2;
     margin: 0;
     padding: 0;
 }
 
-.bg-color-primary{
-    background-color:#229799;
+.bg-color-primary {
+    background-color: #229799;
 }
 
-.bg-color-secondary{
-    background-color:#f5f5f5;
+.bg-color-secondary {
+    background-color: #f5f5f5;
 }
 
-.banner{
-    width:100%;
-    height:100vh;
-    background:Linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.85)) , url(../images/home-bg.jpg);
-    background-size:cover;
+.banner {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(../images/home-bg.jpg);
+    background-size: cover;
     background-position: center;
-    color:white;
+    color: white;
 }
 
-.my-card{
-    padding:20px;
-    margin:auto;
+
+/* navbar styles */
+
+.navbar {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    height: 35px;
+}
+.navbar-brand{
+font-size: 14px;
 }
 
-.register-alert{
-    margin:10
+.navbar-toggler-icon {
+    color: black;
+}
+
+
+.navbar-nav .nav-link {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 11px;
+}
+
+
+
+.my-card {
+    padding: 20px;
+    margin: auto;
+}
+
+.register-alert {
+    margin: 10;
+}
+
+
+
+#sidebarMenu {
+    width: 20%;
+    top: 35px;
+    bottom: 0px;
+    height: calc(100vh - 35px); /* Full height minus navbar height */
+    z-index: 1000;
+}
+
+.sidebar a:hover {
+    background-color: #229799;
+    color: white;
+}
+
+.sidebar a{
+    font-size:10px;
+}
+.sidebar{
+    display: block;
+}
+
+/* Media Query for small screens */
+@media only screen and (max-width: 780px) {
+    #sidebarMenu {
+        width: 20%;
+        top: 35px;
+        bottom: 0px;
+        height: calc(100vh - 35px); /* Full height minus navbar height */
+        z-index: 1000;
+    }
+    .sidebar a{
+        font-size:8px;
+    }
+
+    .content-area-user-dashboard {
+        margin-left: 0 !important; /* Remove left margin for small screens */
+        margin-top: 50px; /* Keep margin-top for small screens */
+    }
+
+    /* Optional: You can also add a hamburger icon or button to toggle sidebar visibility */
+    .navbar .navbar-toggler {
+        display: block;
+        color:white;
+        z-index:1000;
+    }
+
+    .in-button {
+        transform: rotate(180deg);
+    }
+}
+
+.crsbtn {
+    position: absolute;
+    top: 10px;  /* Adjust this to give it some space from the top */
+    right: 20px; /* Adjust this to give it some space from the right */
+    color: black; /* Text color */
+    padding: 5px; /* Add padding for a more clickable area */
+    cursor: pointer; /* Ensure the cursor changes to pointer on hover */
+    z-index: 1050; /* Ensure it appears above other elements */
+    text-align: center; /* Center the text inside the button */
+}
+
+.content-area-user-dashboard {
+    margin-left: 20%; /* Align the content next to the sidebar */
+    margin-top: 35px; /* Adjust to the height of the navbar */
+    padding: 10px; /* Add padding for better spacing */
+}
+
+
+.in-button {
+    transform: rotate(180deg);
+    margin-top: -10px;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 1050;
+    text-align: center;
+}
+.out-button{
+        margin-top: -10px;
+        padding: 5px;
+        cursor: pointer;
+        z-index: 1050;
+        text-align: center;
 }

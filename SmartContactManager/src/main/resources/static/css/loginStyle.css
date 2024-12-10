@@ -11,6 +11,8 @@ background: linear-gradient(to right, #229799, #1a7e7e, #146d6d, #0f5c5c);
 
 }
 
+
+
 @media (min-width: 768px) {
 .gradient-form {
 height: 100vh !important;
