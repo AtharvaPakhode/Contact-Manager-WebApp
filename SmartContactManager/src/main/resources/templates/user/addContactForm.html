@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="user/base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+
+
+</head>
+<body>
+<section>
+    <div class="content-area-user-dashboard">
+        <span>
+            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
+        </span>
+
+        <!-- SIDE BAR -->
+        <div id="sidebarMenu" class=" sidebar bg-white ">
+            <!-- Close Button -->
+            <span onclick="toggleSideBar()"  class="crsbtn">
+                <i class="fa fa-close" style="font-size:18px"></i>
+            </span>
+
+            <div class="position-sticky">
+
+                <div class="list-group list-group-flush mx-3 mt-4">
+
+                    <!-- Home -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <i class="fas fa-home fa-fw me-3"></i><span>Home</span>
+                    </a>
+                    <!-- Add Contact -->
+                    <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
+                    </a>
+                    <!-- View Contacts -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
+                    </a>
+                    <!-- Profile -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
+                    </a>
+                    <!-- Settings -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
+                    </a>
+                    <!-- Logout -->
+                    <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END SIDE BAR -->
+
+        <div class="container mt-5">
+            <div class="card shadow">
+                <div class="card-header bg-color-primary text-white">
+                    <h4 class="text-center">Add New Contact</h4>
+                </div>
+                <div class="card-body">
+                    <form id="addContactForm">
+                        <!-- Name -->
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="contactName" name="name" placeholder="Full Name" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="contactEmail" name="email" placeholder="Email Address" required>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            <input type="tel" class="form-control" id="contactPhone" name="phone" placeholder="Phone Number" required>
+                        </div>
+
+                        <!-- Nickname -->
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+                            <input type="text" class="form-control" id="contactNickname" name="nickname" placeholder="Nickname">
+                        </div>
+
+                        <!-- Work -->
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                            <input type="text" class="form-control" id="contactWork" name="work" placeholder="Work or Occupation">
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text"><i class="fas fa-image"></i></span>
+                            <input type="url" class="form-control" id="contactImageURL" name="imageURL" placeholder="Image URL">
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <textarea class="form-control" id="contactDescription" name="description" rows="3" placeholder="Add a brief description"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-sm w-auto">Add Contact</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+</section>
+
+
+</body>
+</html>
