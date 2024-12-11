@@ -21,7 +21,7 @@ public class Contacts {
 
     private String contact_work;
 
-    private String contact_imageURL;
+    private String contact_image;;
 
     @ManyToOne
     private User user;
@@ -79,12 +79,12 @@ public class Contacts {
         this.contact_work = contact_work;
     }
 
-    public String getContact_imageURL() {
-        return contact_imageURL;
+    public String getContact_image() {
+        return contact_image;
     }
 
-    public void setContact_imageURL(String contact_imageURL) {
-        this.contact_imageURL = contact_imageURL;
+    public void setContact_image(String contact_image) {
+        this.contact_image = contact_image;
     }
 
     public String getAbout_contact() {
@@ -95,21 +95,45 @@ public class Contacts {
         this.about_contact = about_contact;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     //Constructor
 
     public Contacts() {
     }
 
-    public Contacts(int contact_id, String contact_name, String contact_email, String phone_number, String contact_nickname, String contact_work, String contact_imageURL, String about_contact) {
+    public Contacts(int contact_id, String contact_name, String contact_email, String phone_number, String contact_nickname, String contact_work, String contact_image, User user, String about_contact) {
         this.contact_id = contact_id;
         this.contact_name = contact_name;
         this.contact_email = contact_email;
         this.phone_number = phone_number;
         this.contact_nickname = contact_nickname;
         this.contact_work = contact_work;
-        this.contact_imageURL = contact_imageURL;
+        this.contact_image = contact_image;
+        this.user = user;
         this.about_contact = about_contact;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Contacts{" +
+                "contact_id=" + contact_id +
+                ", contact_name='" + contact_name + '\'' +
+                ", contact_email='" + contact_email + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                ", contact_nickname='" + contact_nickname + '\'' +
+                ", contact_work='" + contact_work + '\'' +
+                ", contact_image='" + contact_image + '\'' +
+                ", user=" + user +
+                ", about_contact='" + about_contact + '\'' +
+                '}';
     }
 }
 
