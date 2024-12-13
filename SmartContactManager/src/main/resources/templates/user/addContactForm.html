@@ -56,60 +56,77 @@
 
         <div class="container mt-5">
             <div class="card shadow">
+
+
+
                 <div class="card-header bg-color-primary text-white">
                     <h4 class="text-center">Add New Contact</h4>
                 </div>
                 <div class="card-body">
 
-                    <form   id="addContactForm"
-                            th:object="${contact}"
-                            enctype="multipart/form-data"
-                            method="POST"
-                            th:action="@{/user/process-add-contact}"
-                    >
+                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
+                        <p th:text="${session.message.content}"></p>
+                    </div>
+
+                    <form id="addContactForm"
+                          th:object="${contact}"
+                          enctype="multipart/form-data"
+                          method="POST"
+                          th:action="@{/user/process-add-contact}">
 
                         <!-- Name -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control" id="contactName" name="contact_name" placeholder="Full Name" required>
+                            <input type="text" class="form-control" id="contactName" name="contact_name" placeholder="Full Name"
+                                   th:classappend="${#fields.hasErrors('contact_name') ? 'is-invalid' : ''}" th:value="${contact.contact_name}" >
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_name')}" th:text="${e}"></div>
                         </div>
 
                         <!-- Email -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" id="contactEmail" name="contact_email" placeholder="Email Address" required>
+                            <input type="email" class="form-control" id="contactEmail" name="contact_email" placeholder="Email Address"
+                                   th:classappend="${#fields.hasErrors('contact_email') ? 'is-invalid' : ''}" th:value="${contact.contact_email}" >
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_email')}" th:text="${e}"></div>
                         </div>
 
                         <!-- Phone Number -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" id="contactPhone" name="phone_number" placeholder="Phone Number" required>
+                            <input type="tel" class="form-control" id="contactPhone" name="phone_number" placeholder="Phone Number"
+                                   th:classappend="${#fields.hasErrors('phone_number') ? 'is-invalid' : ''}" th:value="${contact.phone_number}" >
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('phone_number')}" th:text="${e}"></div>
                         </div>
 
                         <!-- Nickname -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
-                            <input type="text" class="form-control" id="contactNickname" name="contact_nickname" placeholder="Nickname">
+                            <input type="text" class="form-control" id="contactNickname" name="contact_nickname" placeholder="Nickname"
+                                   th:classappend="${#fields.hasErrors('contact_nickname') ? 'is-invalid' : ''}" th:value="${contact.contact_nickname}">
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_nickname')}" th:text="${e}"></div>
                         </div>
 
                         <!-- Work -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
-                            <input type="text" class="form-control" id="contactWork" name="contact_work" placeholder="Work or Occupation">
+                            <input type="text" class="form-control" id="contactWork" name="contact_work" placeholder="Work or Occupation"
+                                   th:classappend="${#fields.hasErrors('contact_work') ? 'is-invalid' : ''}" th:value="${contact.contact_work}">
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_work')}" th:text="${e}"></div>
                         </div>
 
                         <!-- Image URL -->
-                        <div class="mb-3 input-group ">
+                        <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-image"></i></span>
-                            <input type="file" accept=".png, .gif, .jpeg, .jpg"  class="form-control" id="contactImage" name="contactImage" >
+                            <input type="file" accept=".png, .gif, .jpeg, .jpg" class="form-control" id="contactImage" name="contactImage">
+
                         </div>
 
                         <!-- About Contact -->
                         <div class="mb-3 text-grid">
                             <label for="contactDescription">About Contact</label><br>
-                            <textarea rows="5" class="form-control" id="contactDescription" name="about_contact"></textarea>
+                            <textarea rows="5" class="form-control" id="contactDescription" name="about_contact" th:classappend="${#fields.hasErrors('about_contact') ? 'is-invalid' : ''}" th:value="${contact.about_contact}"></textarea>
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('about_contact')}" th:text="${e}"></div>
                         </div>
-
 
                         <!-- Submit Button -->
                         <div class="text-center">
@@ -117,6 +134,7 @@
                         </div>
 
                     </form>
+
                 </div>
             </div>
         </div>

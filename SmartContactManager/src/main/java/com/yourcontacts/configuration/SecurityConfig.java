@@ -14,13 +14,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig  {
+public class SecurityConfig {
 
-
-
-    /*
-     *  This will Configure which URL needs to be protected from which kind of USER
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -41,15 +36,17 @@ public class SecurityConfig  {
 
 
     @Bean
-    public UserDetailsService userDetailsService(){
-            return new CustomUserDetailsService();
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
     }
+
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
