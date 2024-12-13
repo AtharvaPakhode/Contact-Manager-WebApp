@@ -1,36 +1,46 @@
 package com.yourcontacts.models;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="contact_table")
+@Table(name = "contact_table")
 public class Contacts {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int contact_id;
 
+    @NotBlank(message = "Contact name is required")
+    @Size(min = 3, max = 100, message = "Contact name must be between 3 and 100 characters")
     private String contact_name;
 
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
     private String contact_email;
 
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be exactly 10 digits")
     private String phone_number;
 
+    @Size(min = 2, max = 50, message = "Nickname should be between 2 and 50 characters")
     private String contact_nickname;
 
+    @Size(min = 2, max = 100, message = "Work should be between 2 and 100 characters")
     private String contact_work;
 
-    private String contact_image;;
+    private String contact_image; // Will be handled for file upload in controller
 
     @ManyToOne
     private User user;
 
-    @Column(length=500)
+    @Size(min = 10, max = 500, message = "Description should be between 10 and 500 characters")
     private String about_contact;
 
-    //Getters and setters---->
-
+    // Getters and Setters
     public int getContact_id() {
         return contact_id;
     }
@@ -87,14 +97,6 @@ public class Contacts {
         this.contact_image = contact_image;
     }
 
-    public String getAbout_contact() {
-        return about_contact;
-    }
-
-    public void setAbout_contact(String about_contact) {
-        this.about_contact = about_contact;
-    }
-
     public User getUser() {
         return user;
     }
@@ -103,7 +105,15 @@ public class Contacts {
         this.user = user;
     }
 
-    //Constructor
+    public String getAbout_contact() {
+        return about_contact;
+    }
+
+    public void setAbout_contact(String about_contact) {
+        this.about_contact = about_contact;
+    }
+
+    // Constructor
 
     public Contacts() {
     }
@@ -120,7 +130,6 @@ public class Contacts {
         this.about_contact = about_contact;
     }
 
-
     @Override
     public String toString() {
         return "Contacts{" +
@@ -136,6 +145,3 @@ public class Contacts {
                 '}';
     }
 }
-
-
-

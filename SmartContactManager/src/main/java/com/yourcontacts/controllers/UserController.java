@@ -1,16 +1,19 @@
 package com.yourcontacts.controllers;
 
 
+import com.yourcontacts.helper.Message;
 import com.yourcontacts.models.Contacts;
 import com.yourcontacts.models.User;
 import com.yourcontacts.repo.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,12 +48,22 @@ public class UserController {
     }
 
     @PostMapping("/process-add-contact")
-    public String saveContact(Model model,
-                              @ModelAttribute Contacts contact,
+    public String saveContact(@Valid @ModelAttribute("contact") Contacts contact,
+                              BindingResult bindingResult,
+                              Model model,
                               Principal principal,
-                              @RequestParam("contactImage") MultipartFile contactImage )  {
+                              @RequestParam("contactImage") MultipartFile contactImage,
+                              HttpSession session)  {
 
         try{
+
+            if (bindingResult.hasErrors()) {
+                // If validation fails, return the form with error messages
+                model.addAttribute("contact",contact);
+                return "user/addContactForm"; // Return to the form page (Thymeleaf template)
+            }
+
+
             String name = principal.getName();
             User user = this.userRepo.getUserByName(name);
 
@@ -78,6 +91,8 @@ public class UserController {
             contact.setUser(user);
             user.getContact_list().add(contact);
             this.userRepo.save(user);
+
+            session.setAttribute("message", new Message("Contact Saved", "alert-success"));
         }
         catch(Exception e){
             e.printStackTrace();
