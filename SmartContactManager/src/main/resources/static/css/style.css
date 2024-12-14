@@ -143,3 +143,70 @@ font-size: 14px;
         z-index: 1050;
         text-align: center;
 }
+
+
+/* Profile Image Style (view-contact page) */
+
+/* Ensures that the image stays aligned and doesn't cause misalignment */
+.my-profile-image {
+    height: 35px;
+    width: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px; /* Space between the image and the name */
+}
+
+/* Ensure that the table cells align properly */
+table td {
+    vertical-align: middle; /* Align the text and images vertically */
+}
+
+/* For proper alignment of the contact name and other text */
+.contact-info {
+    display: flex;
+    align-items: flex-start ; /* Align image and text horizontally */
+}
+
+.contact-name {
+    margin-left: 10px; /* Space between the image and the contact name */
+    text-overflow: ellipsis; /* Prevent text overflow */
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px; /* Adjust the width based on your preference */
+}
+
+td {
+    padding: 8px; /* Add some padding to ensure content is not crowded */
+}
+
+a {
+    text-decoration: none;
+}
+
+.custom-link {
+    position: relative;
+    color: #229799; /* Default color */
+    text-decoration: none;
+}
+
+
+
+.pagination .page-item.active .page-link {
+        background-color: #229799; /* Custom background color */
+        color: white;
+         border:none;/* Custom text color */
+}
+.pagination .page-item .page-link {
+        color: #229799; /* Set text color for non-active pages */
+}
+
+
+/* Profile Image Style (view-contact page) */
+
+.profile-image-details{
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+
+}

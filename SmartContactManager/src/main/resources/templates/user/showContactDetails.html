@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Contacts</title>
+
+
+
+</head>
+<body>
+
+<section>
+
+    <div class="content-area-user-dashboard">
+        <span>
+            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
+        </span>
+
+        <!-- SIDE BAR -->
+        <div id="sidebarMenu" class=" sidebar bg-white ">
+            <!-- Close Button -->
+            <span onclick="toggleSideBar()"  class="crsbtn">
+                <i class="fa fa-close" style="font-size:18px"></i>
+            </span>
+
+            <div class="position-sticky">
+
+                <div class="list-group list-group-flush mx-3 mt-4">
+
+                    <!-- Home -->
+                    <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+                    </a>
+                    <!-- Add Contact -->
+                    <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
+                    </a>
+                    <!-- View Contacts -->
+                    <a href="#" th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
+                    </a>
+                    <!-- Profile -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
+                    </a>
+                    <!-- Settings -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
+                    </a>
+                    <!-- Logout -->
+                    <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END SIDE BAR -->
+
+        <div class="card text-center">
+            <div class="card-body text-center ">
+
+                <div class="text-center">
+                    <div>
+                        <img class="profile-image-details" th:src="@{'/contact_images/'+ ${contact.contact_image}}" alt ="Profile image"/>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-top:20px"th:text="${contact.contact_name}"> </h3>
+                    </div>
+                </div>
+
+                <div style="margin-top:40px; font-size:large; font-weight:bold;"   class="text-center">
+                    Contact Details
+                </div >
+
+                <div style="margin-top:40px" class="text-center">
+                    <table class="table table-striped">
+
+
+                        <tbody >
+                        <tr>
+                            <th scope="row" style="text-align: left; padding-left: 200px;">ID</th>
+                            <td th:text="${contact.contact_id}" style="text-align: left; padding-left: 400px;"></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left; padding-left: 200px;">Name</th>
+                            <td th:text="${contact.contact_name}" style="text-align: left; padding-left: 400px;"></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left; padding-left: 200px;">Email</th>
+                            <td th:text="${contact.contact_email}" style="text-align: left; padding-left: 400px;"></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left; padding-left: 200px;">Phone</th>
+                            <td th:text="${contact.phone_number}" style="text-align: left; padding-left: 400px;"></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row" style="text-align: left; padding-left: 200px;">Work</th>
+                            <td th:text="${contact.contact_work}" style="text-align: left; padding-left: 400px;"></td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card w-auto text-center " style="margin-top:40px ">
+                    <div class="card-body">
+                        <h5 class="card-title font-size:large; font-weight:bold;" >About Contact</h5>
+                        <p class="card-text" ></p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+</section>
+
+
+
+
+</body>
+</html>

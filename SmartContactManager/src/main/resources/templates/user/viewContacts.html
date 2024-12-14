@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>addContactForm</title>
+</head>
+<body>
+<section>
+
+    <div class="content-area-user-dashboard">
+
+        <span>
+            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
+        </span>
+
+        <!-- SIDE BAR -->
+        <div id="sidebarMenu" class="sidebar bg-white">
+            <!-- Close Button -->
+            <span onclick="toggleSideBar()" class="crsbtn">
+                <i class="fa fa-close" style="font-size:18px"></i>
+            </span>
+
+            <div class="position-sticky">
+                <div class="list-group list-group-flush mx-3 mt-4">
+                    <!-- Home -->
+                    <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+                    </a>
+                    <!-- Add Contact -->
+                    <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
+                    </a>
+                    <!-- View Contacts -->
+                    <a href="#" th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
+                    </a>
+                    <!-- Profile -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
+                    </a>
+                    <!-- Settings -->
+                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
+                    </a>
+                    <!-- Logout -->
+                    <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- END SIDE BAR -->
+
+        <div class="card text-center">
+            <div class="card-body">
+                <div style="font-weight:bold margin-top: 10px">
+                    <h3>Contacts</h3>
+                </div>
+
+                <table class="table table-striped " style="margin-top: 50px !important;">
+
+                    <thead>
+                    <tr>
+                        <th scope="col">Contact ID</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nickname</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Work</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="c : ${contacts}">
+                        <td th:text="${'CM-'+ c.contact_id}"></td>
+
+                        <td>
+                            <img class="my-profile-image" th:src="@{'/contact_images/' + ${c.contact_image}}" alt ="Profile image"/>
+                        </td>
+
+                        <td>
+                            <a th:href="@{'/user/show-contact-details/'+ ${c.contact_id}}" class="custom-link">
+                                <span th:text="${c.contact_name}" ></span>
+                            </a>
+                        </td>
+
+                        <td th:text="${c.contact_nickname}"></td>
+
+                        <td>
+                            <span th:text="${c.contact_email}"></span>
+
+                        </td>
+
+                        <td th:text="${c.phone_number}"></td>
+                        <td th:text="${c.contact_work}"></td>
+
+                        <!-- Edit Button -->
+                        <td>
+                            <a  class="btn btn-warning btn-sm"
+                                style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background-color:#229799; color:white ; border:none">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </td>
+
+                        <!-- Delete Button -->
+                        <td>
+                            <form  method="post" onsubmit="return confirm('Are you sure you want to delete this contact?');">
+                                <button type="submit" class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+                <!-- PAGINATION -->
+                <nav aria-label="Page navigation example" style="margin-top:20px;">
+                    <ul class="pagination ">
+                        <li class="page-item" th:if ="${currentPage != 0} ">
+                            <a class="page-link " th:href="@{/user/view-contact/{page}(page=${currentPage-1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li th:classappend="${currentPage == i ? 'active' : '' }" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item">
+                            <a class="page-link" th:href="@{/user/view-contact/{page}(page=${i})}">
+                                <span th:text="${i + 1}"></span> <!-- Display page number starting from 1 -->
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:if ="${currentPage+1  != totalPages} ">
+                            <a class="page-link" th:href="@{/user/view-contact/{page}(page=${currentPage+1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+</section>
+
+
+
+</body>
+</html>
