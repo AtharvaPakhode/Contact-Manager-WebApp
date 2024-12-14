@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="user/base::layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="base::layout(~{::section})">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-
-
-
+    <title>addContactForm</title>
 </head>
 <body>
 <section>
@@ -15,16 +12,14 @@
         </span>
 
         <!-- SIDE BAR -->
-        <div id="sidebarMenu" class=" sidebar bg-white ">
+        <div id="sidebarMenu" class="sidebar bg-white">
             <!-- Close Button -->
-            <span onclick="toggleSideBar()"  class="crsbtn">
+            <span onclick="toggleSideBar()" class="crsbtn">
                 <i class="fa fa-close" style="font-size:18px"></i>
             </span>
 
             <div class="position-sticky">
-
                 <div class="list-group list-group-flush mx-3 mt-4">
-
                     <!-- Home -->
                     <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
@@ -34,7 +29,7 @@
                         <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
                     </a>
                     <!-- View Contacts -->
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                    <a href="#" th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
                     </a>
                     <!-- Profile -->
@@ -56,17 +51,17 @@
 
         <div class="container mt-5">
             <div class="card shadow">
-
-
-
                 <div class="card-header bg-color-primary text-white">
                     <h4 class="text-center">Add New Contact</h4>
                 </div>
-                <div class="card-body">
 
+                <div class="card-body">
+                    <!-- Display message -->
                     <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
                         <p th:text="${session.message.content}"></p>
                     </div>
+                    <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+                    <!-- Display message end -->
 
                     <form id="addContactForm"
                           th:object="${contact}"
@@ -78,7 +73,7 @@
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                             <input type="text" class="form-control" id="contactName" name="contact_name" placeholder="Full Name"
-                                   th:classappend="${#fields.hasErrors('contact_name') ? 'is-invalid' : ''}" th:value="${contact.contact_name}" >
+                                   th:classappend="${#fields.hasErrors('contact_name') ? 'is-invalid' : ''}" th:value="${contact.contact_name}">
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_name')}" th:text="${e}"></div>
                         </div>
 
@@ -86,7 +81,7 @@
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             <input type="email" class="form-control" id="contactEmail" name="contact_email" placeholder="Email Address"
-                                   th:classappend="${#fields.hasErrors('contact_email') ? 'is-invalid' : ''}" th:value="${contact.contact_email}" >
+                                   th:classappend="${#fields.hasErrors('contact_email') ? 'is-invalid' : ''}" th:value="${contact.contact_email}">
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_email')}" th:text="${e}"></div>
                         </div>
 
@@ -94,7 +89,7 @@
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             <input type="tel" class="form-control" id="contactPhone" name="phone_number" placeholder="Phone Number"
-                                   th:classappend="${#fields.hasErrors('phone_number') ? 'is-invalid' : ''}" th:value="${contact.phone_number}" >
+                                   th:classappend="${#fields.hasErrors('phone_number') ? 'is-invalid' : ''}" th:value="${contact.phone_number}">
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('phone_number')}" th:text="${e}"></div>
                         </div>
 
@@ -118,7 +113,6 @@
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-image"></i></span>
                             <input type="file" accept=".png, .gif, .jpeg, .jpg" class="form-control" id="contactImage" name="contactImage">
-
                         </div>
 
                         <!-- About Contact -->
@@ -142,7 +136,9 @@
 
 
 
+
 </section>
+
 
 
 </body>
