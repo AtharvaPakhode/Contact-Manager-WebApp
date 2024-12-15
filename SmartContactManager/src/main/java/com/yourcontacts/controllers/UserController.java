@@ -24,7 +24,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -160,15 +159,63 @@ public class UserController {
         Optional<Contacts> contactOptional = contactRepo.findById(contact_id);
         Contacts contact = contactOptional.get();
 
-        if (contactOptional.isPresent()) {
+        String name = principal.getName();
+        User loginUser = this.userRepo.getUserByName(name);
+
+        if (loginUser.getUser_id() == contact.getUser().getUser_id()) {
             model.addAttribute("contact", contact);
-        } else {
-            model.addAttribute("error", "Contact not found");
         }
 
 
 
         return "user/showContactDetails";
+    }
+
+    @GetMapping("/delete-contact/{contactID}")
+    public String deleteContact(@PathVariable ("contactID") Integer contact_id ,
+                                Model model,
+                                Principal principal,
+                                HttpSession session){
+
+        Optional<Contacts> contactOptional = this.contactRepo.findById(contact_id);
+        Contacts contact =contactOptional.get();
+
+
+
+        String name = principal.getName();
+        User loginUser = this.userRepo.getUserByName(name);
+
+        if (loginUser.getUser_id() == contact.getUser().getUser_id()) {
+
+            contact.setUser(null);
+            this.contactRepo.delete(contact);
+
+            // removing contact image from folder
+            String contactImage = contact.getContact_image();
+            String fileNameToDelete = contactImage;
+
+            // Define the file path where the image is located
+            String folderPath = "static/contact_images"; // or use an absolute path if needed
+            File directory = new File(folderPath);
+
+            // Construct the full file path
+            Path target_location = Paths.get(directory.getAbsolutePath() + File.separator + fileNameToDelete);
+
+            // Check if the file exists and delete it
+            File fileToDelete = target_location.toFile();
+            if (fileToDelete.exists() && fileToDelete.isFile()) {
+                boolean deleted = fileToDelete.delete();
+            } else {
+                System.out.println("Image not found.");
+            }
+
+
+            session.setAttribute("message" , new Message("Contact Deleted Successfully", "alert-success"));
+        }
+
+        return "redirect:/user/view-contact/0";
+
+
     }
 
 

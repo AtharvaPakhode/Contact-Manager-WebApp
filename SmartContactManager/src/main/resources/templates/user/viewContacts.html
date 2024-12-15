@@ -51,11 +51,18 @@
         </div>
         <!-- END SIDE BAR -->
 
-        <div class="card text-center">
-            <div class="card-body">
+        <div  class="card text-center">
+            <div  class="card-body"  >
                 <div style="font-weight:bold margin-top: 10px">
                     <h3>Contacts</h3>
                 </div>
+
+                <!-- Display message -->
+                <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
+                    <p th:text="${session.message.content}"></p>
+                </div>
+                <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+                <!-- Display message end -->
 
                 <table class="table table-striped " style="margin-top: 50px !important;">
 
@@ -106,11 +113,9 @@
 
                         <!-- Delete Button -->
                         <td>
-                            <form  method="post" onsubmit="return confirm('Are you sure you want to delete this contact?');">
-                                <button type="submit" class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;" th:onclick="|deleteContact(${c.contact_id})|">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -144,6 +149,8 @@
 
             </div>
         </div>
+
+
 
 
 

@@ -48,7 +48,29 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/javascript/script.js}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<script>
+    function deleteContact(id){
+
+        swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this contact",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+             })
+                .then((willDelete) => {
+                 if (willDelete) {
+                    window.location="/user/delete-contact/"+ id ;
+                } else {
+                    swal("Your Contact is safe");
+
+                  }
+                });
+
+        }
+</script>
 </body>
 
 <!-- Bootstrap Bundle with Popper (Required for navbar toggle) -->
