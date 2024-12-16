@@ -9,17 +9,21 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ContactRepository extends JpaRepository<Contacts,Integer> {
+/**
+ * Repository interface for performing CRUD operations on the Contacts entity.
+ * It extends JpaRepository to provide standard database operations for Contacts.
+ */
+public interface ContactRepository extends JpaRepository<Contacts, Integer> {
 
-    /*
-        custom method to find contact by user id which belongs to specific user
-        'pegeable' object contains info about :
-         1.contacts per page
-         2.current page
-
+    /**
+     * Custom method to find contacts belonging to a specific user by their user ID.
+     * The method uses pagination to retrieve contacts in a paged manner.
+     *
+     * @param id The user ID for which contacts are to be fetched.
+     * @param pageable Contains information about pagination, including the number of contacts per page and the current page number.
+     * @return A Page of Contacts associated with the specified user ID.
      */
-    @Query("from Contacts as c where c.user.user_id =:id")
-    public Page<Contacts> findContactByUser(@Param("id")int id , Pageable pageable);
-
+    @Query("from Contacts c where c.user.user_id = :id")
+    Page<Contacts> findContactByUser(@Param("id") int id, Pageable pageable);
 
 }

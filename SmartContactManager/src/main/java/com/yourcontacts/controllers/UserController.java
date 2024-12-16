@@ -1,6 +1,5 @@
 package com.yourcontacts.controllers;
 
-
 import com.yourcontacts.helper.Message;
 import com.yourcontacts.models.Contacts;
 import com.yourcontacts.models.User;
@@ -26,75 +25,117 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.Optional;
 
+/**
+ * This controller handles the operations related to the user, including adding, updating, deleting,
+ * and viewing contacts. It interacts with both the `User` and `Contacts` models,
+ * and the corresponding repositories to manage contacts.
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserRepository userRepo;
 
     @Autowired
     private ContactRepository contactRepo;
 
+
+
+
+    /**
+     * This method adds the current user's information to the model for every request.
+     * It ensures that the username and user details are available in the views.
+     *
+     * @param model The model to add attributes to the view
+     * @param principal The principal object that holds the current user's information
+     */
     @ModelAttribute
-    public void addCommonData(Model model,Principal principal){
+    public void addCommonData(Model model, Principal principal){
         String username = principal.getName();
-        User user =userRepo.getUserByName(username);
-        model.addAttribute("user",user);
+        User user = userRepo.getUserByName(username);
+        model.addAttribute("user", user);
     }
 
+
+
+
+    /**
+     * Displays the user dashboard.
+     *
+     * @param model The model object that holds the data for the view
+     * @param principal The current authenticated user
+     * @return the name of the view (user_dashboard)
+     */
     @GetMapping("/index")
     public String dashboard(Model model, Principal principal){
-
+        model.addAttribute("title", "Dashboard");
         return "user/user_dashboard";
     }
 
+
+
+
+    /**
+     * Displays the form to add a new contact.
+     *
+     * @param model The model object to hold attributes for the view
+     * @return the name of the view (addContactForm)
+     */
     @GetMapping("/add-contact")
-    public String addContactForm (Model model){
-        model.addAttribute("title","Add Contact Form");
+    public String addContactForm(Model model){
+        model.addAttribute("title", "Add Contact");
         model.addAttribute("contact", new Contacts());
         return "user/addContactForm";
     }
 
+
+
+
+    /**
+     * Processes the form to save a new contact.
+     *
+     * @param contact The contact object submitted from the form
+     * @param bindingResult Holds validation errors, if any
+     * @param model The model object to hold attributes for the view
+     * @param principal The current authenticated user
+     * @param contactImage The contact's image to be uploaded
+     * @param session The session object to store messages for the user
+     * @return the name of the view (addContactForm)
+     */
     @PostMapping("/process-add-contact")
     public String saveContact(@Valid @ModelAttribute("contact") Contacts contact,
                               BindingResult bindingResult,
                               Model model,
                               Principal principal,
                               @RequestParam("contactImage") MultipartFile contactImage,
-                              HttpSession session)  {
+                              HttpSession session) {
 
-        try{
-
+        try {
+            // If there are validation errors, return the form with errors
             if (bindingResult.hasErrors()) {
-                // If validation fails, return the form with error messages
-                model.addAttribute("contact",contact);
-                return "user/addContactForm"; // Return to the form page (Thymeleaf template)
+                model.addAttribute("contact", contact);
+                return "user/addContactForm";
             }
-
 
             String name = principal.getName();
             User user = this.userRepo.getUserByName(name);
 
-            //process and upload file
-            if(contactImage.isEmpty()){
-                System.out.println("empty image");
+            // Process and upload the contact image
+            if (contactImage.isEmpty()) {
                 contact.setContact_image("contactDefault.png");
-            }
-            else{
-
-                //upload file to folder and update the name of file  to contact
+            } else {
+                // Upload image to folder and update the contact image name
                 contact.setContact_image(contactImage.getOriginalFilename());
-                // Define the file path where the image will be saved
-                String folderPath = "static/contact_images"; // or use an absolute path if needed
+                String folderPath = "static/contact_images";
                 File directory = new File(folderPath);
 
-                // Ensure the directory exists
                 if (!directory.exists()) {
-                    directory.mkdirs();  // Creates directories if they don't exist
+                    directory.mkdirs();
                 }
-                Path target_location = Paths.get(directory.getAbsolutePath() + File.separator + contactImage.getOriginalFilename());
-                Files.copy(contactImage.getInputStream(),target_location, StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("image uploaded");
+
+                Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + contactImage.getOriginalFilename());
+                Files.copy(contactImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
 
             contact.setUser(user);
@@ -102,59 +143,61 @@ public class UserController {
             this.userRepo.save(user);
 
             session.setAttribute("message", new Message("Contact Saved", "alert-success"));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            System.out.println("error : " + e.getMessage() );
-        }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "user/addContactForm";
     }
-    
-    
+
+
+
+
+    /**
+     * Displays the list of contacts with pagination.
+     *
+     * @param page The page number for pagination
+     * @param model The model object to hold the contact list
+     * @param principal The current authenticated user
+     * @return the name of the view (viewContacts)
+     */
     @GetMapping("/view-contact/{page}")
-    public String viewContact(@PathVariable("page") Integer page , Model model,Principal principal){
+    public String viewContact(@PathVariable("page") Integer page, Model model, Principal principal) {
 
-        // Set the page title for the view
-        model.addAttribute("title","view contacts");
+        model.addAttribute("title", "View Contacts");
 
-
-        /*
-         * Retrieve the username of the currently authenticated user.
-         * The 'principal' object represents the current user.
-         */
         String name = principal.getName();
         User user = this.userRepo.getUserByName(name);
 
-
-        /*
-         * Retrieve the user ID and prepare pagination settings for fetching contacts.
-         * 'page' determines the current page, and we are setting a page size of 5 contacts per page.
-         */
         int id = user.getUser_id();
-        Pageable pageable= PageRequest.of(page , 8);
-        Page<Contacts> contactList =this.contactRepo.findContactByUser(id , pageable);
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Contacts> contactList = this.contactRepo.findContactByUser(id, pageable);
 
-
-        // Add the contact list to the model, making it accessible to the view
         model.addAttribute("contacts", contactList);
-
-        // Add the current page to the model, making it accessible to the view
-        model.addAttribute("currentPage",page);
-
-        // Add the total pages to the model, making it accessible to the view
+        model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", contactList.getTotalPages());
 
         return "user/viewContacts";
     }
 
-    @GetMapping("/show-contact-details/{contactID}")
-    public String showContactDetails(@PathVariable ("contactID") Integer contact_id,
-                                     Model model ,
-                                     Principal principal ){
 
-        model.addAttribute("title","Show Contact Details");
+
+
+    /**
+     * Displays the details of a specific contact.
+     *
+     * @param contact_id The ID of the contact to be displayed
+     * @param model The model object to hold the contact details
+     * @param principal The current authenticated user
+     * @return the name of the view (showContactDetails)
+     */
+    @GetMapping("/show-contact-details/{contactID}")
+    public String showContactDetails(@PathVariable("contactID") Integer contact_id,
+                                     Model model,
+                                     Principal principal) {
+
+        model.addAttribute("title", "Show Contact Details");
 
         Optional<Contacts> contactOptional = contactRepo.findById(contact_id);
         Contacts contact = contactOptional.get();
@@ -166,58 +209,162 @@ public class UserController {
             model.addAttribute("contact", contact);
         }
 
-
-
         return "user/showContactDetails";
     }
 
+
+
+
+    /**
+     * Deletes a contact and its associated image.
+     *
+     * @param contact_id The ID of the contact to be deleted
+     * @param model The model object
+     * @param principal The current authenticated user
+     * @param session The session object to store messages for the user
+     * @return redirect to the contact list page
+     */
     @GetMapping("/delete-contact/{contactID}")
-    public String deleteContact(@PathVariable ("contactID") Integer contact_id ,
+    public String deleteContact(@PathVariable("contactID") Integer contact_id,
                                 Model model,
                                 Principal principal,
-                                HttpSession session){
+                                HttpSession session) {
 
         Optional<Contacts> contactOptional = this.contactRepo.findById(contact_id);
-        Contacts contact =contactOptional.get();
-
-
+        Contacts contact = contactOptional.get();
 
         String name = principal.getName();
         User loginUser = this.userRepo.getUserByName(name);
 
         if (loginUser.getUser_id() == contact.getUser().getUser_id()) {
-
             contact.setUser(null);
             this.contactRepo.delete(contact);
 
-            // removing contact image from folder
+            // Delete the contact's image from the folder
             String contactImage = contact.getContact_image();
             String fileNameToDelete = contactImage;
 
-            // Define the file path where the image is located
-            String folderPath = "static/contact_images"; // or use an absolute path if needed
+            String folderPath = "static/contact_images";
             File directory = new File(folderPath);
+            Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + fileNameToDelete);
 
-            // Construct the full file path
-            Path target_location = Paths.get(directory.getAbsolutePath() + File.separator + fileNameToDelete);
-
-            // Check if the file exists and delete it
-            File fileToDelete = target_location.toFile();
+            File fileToDelete = targetLocation.toFile();
             if (fileToDelete.exists() && fileToDelete.isFile()) {
-                boolean deleted = fileToDelete.delete();
-            } else {
-                System.out.println("Image not found.");
+                fileToDelete.delete();
             }
 
-
-            session.setAttribute("message" , new Message("Contact Deleted Successfully", "alert-success"));
+            session.setAttribute("message", new Message("Contact Deleted Successfully", "alert-success"));
         }
 
         return "redirect:/user/view-contact/0";
-
-
     }
 
 
 
+
+    /**
+     * Displays the form to update an existing contact.
+     *
+     * @param contact_id The ID of the contact to be updated
+     * @param model The model object to hold the contact data
+     * @param principal The current authenticated user
+     * @return the name of the view (updateContact)
+     */
+    @PostMapping("/update-contact/{contactID}")
+    public String updateContact(@PathVariable("contactID") Integer contact_id,
+                                Model model,
+                                Principal principal) {
+
+        String name = principal.getName();
+        User loginUser = this.userRepo.getUserByName(name);
+
+        Optional<Contacts> contactOptional = this.contactRepo.findById(contact_id);
+        Contacts contactToBeUpdated = contactOptional.get();
+
+        model.addAttribute("contact", contactToBeUpdated);
+
+        return "user/updateContact";
+    }
+
+
+
+
+    /**
+     * Processes the form to update the contact information.
+     *
+     * @param contact The contact object with updated data
+     * @param bindingResult Holds validation errors, if any
+     * @param model The model object to hold attributes for the view
+     * @param principal The current authenticated user
+     * @param contactImage The new contact image to be uploaded (if any)
+     * @param contact_id The ID of the contact being updated
+     * @param session The session object to store messages for the user
+     * @return redirect to the contact details page
+     */
+    @PostMapping("/process-update-contact")
+    public String updateContactForm(@Valid @ModelAttribute Contacts contact,
+                                    BindingResult bindingResult,
+                                    Model model,
+                                    Principal principal,
+                                    @RequestParam("contactImage") MultipartFile contactImage,
+                                    @RequestParam("contact_id") Integer contact_id,
+                                    HttpSession session) {
+
+        try {
+            // If validation fails, return the form with errors
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("contact", contact);
+                return "user/updateContact";
+            }
+
+            String name = principal.getName();
+            User user = this.userRepo.getUserByName(name);
+            contact.setUser(user);
+
+            Optional<Contacts> existingContactOptional = this.contactRepo.findById(contact.getContact_id());
+            Contacts existingContact = existingContactOptional.get();
+
+            // Step 1: Delete the existing image file if it exists
+            String oldImage = existingContact.getContact_image();
+            if (oldImage != null && !oldImage.isEmpty()) {
+                String folderPath = "static/contact_images";
+                File fileToDelete = new File(folderPath, oldImage);
+
+                if (fileToDelete.exists()) {
+                    fileToDelete.delete();
+                }
+            }
+
+            // Step 2: Upload the new image (if provided)
+            if (!contactImage.isEmpty()) {
+                String folderPath = "static/contact_images";
+                File directory = new File(folderPath);
+
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+
+                Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + contactImage.getOriginalFilename());
+                Files.copy(contactImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+                existingContact.setContact_image(contactImage.getOriginalFilename());
+            }
+
+            // Step 3: Update the contact details
+            existingContact.setContact_name(contact.getContact_name());
+            existingContact.setContact_email(contact.getContact_email());
+            existingContact.setPhone_number(contact.getPhone_number());
+            existingContact.setContact_nickname(contact.getContact_nickname());
+            existingContact.setContact_work(contact.getContact_work());
+            existingContact.setAbout_contact(contact.getAbout_contact());
+            this.contactRepo.save(existingContact);
+
+            session.setAttribute("message", new Message("Contact Updated", "alert-success"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/user/show-contact-details/" + contact.getContact_id();
+    }
 }

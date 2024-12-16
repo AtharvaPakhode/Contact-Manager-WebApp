@@ -1,71 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="base::layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
 <head>
+    <!-- Meta tag for character encoding -->
     <meta charset="UTF-8">
-    <title>Home</title>
-
-
-
+    <title>User Dashboard</title>
+    <!-- External stylesheets or inline styles can be added here -->
 </head>
 <body>
 
+<!-- Main content area for the user dashboard -->
 <section>
 
+    <!-- Content container for user dashboard -->
     <div class="content-area-user-dashboard">
-        <span>
-            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
-        </span>
 
-        <!-- SIDE BAR -->
-        <div id="sidebarMenu" class=" sidebar bg-white ">
-            <!-- Close Button -->
-            <span onclick="toggleSideBar()"  class="crsbtn">
-                <i class="fa fa-close" style="font-size:18px"></i>
+        <!-- Toggle button to open and close sidebar -->
+        <span>
+                <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
             </span>
 
+        <!-- Sidebar section -->
+        <div id="sidebarMenu" class="sidebar bg-white">
+            <!-- Close button to hide the sidebar -->
+            <span onclick="toggleSideBar()" class="crsbtn">
+                    <i class="fa fa-close" style="font-size:18px"></i>
+                </span>
+
+            <!-- Sticky position for sidebar items -->
             <div class="position-sticky">
 
+                <!-- Sidebar menu items -->
                 <div class="list-group list-group-flush mx-3 mt-4">
 
-                    <!-- Home -->
+                    <!-- Dashboard link -->
                     <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                     </a>
-                    <!-- Add Contact -->
+
+                    <!-- Add Contact link -->
                     <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
                     </a>
-                    <!-- View Contacts -->
-                    <a href="#" th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
+
+                    <!-- View Contacts link -->
+                    <a th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
                     </a>
-                    <!-- Profile -->
+
+                    <!-- Profile link (currently inactive) -->
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
                     </a>
-                    <!-- Settings -->
+
+                    <!-- Settings link (currently inactive) -->
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
                     </a>
-                    <!-- Logout -->
+
+                    <!-- Logout link -->
                     <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
                     </a>
                 </div>
             </div>
         </div>
-        <!-- END SIDE BAR -->
+        <!-- End Sidebar -->
 
     </div>
-
-
-
-
+    <!-- End Content Area -->
 
 </section>
 
-
-
+<!-- Optional external scripts can be included here (for toggle functionality and other interactivity) -->
 
 </body>
 </html>

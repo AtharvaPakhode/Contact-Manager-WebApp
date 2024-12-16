@@ -20,7 +20,7 @@ body {
     height: 100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(../images/home-bg.jpg);
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     color: white;
 }
 
@@ -30,10 +30,10 @@ body {
 .navbar {
     padding-top: 4px;
     padding-bottom: 4px;
-    height: 35px;
+    height: 40px;
 }
 .navbar-brand{
-font-size: 14px;
+font-size: 16px;
 }
 
 .navbar-toggler-icon {
@@ -44,7 +44,7 @@ font-size: 14px;
 .navbar-nav .nav-link {
     padding-top: 5px;
     padding-bottom: 5px;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 
@@ -62,7 +62,7 @@ font-size: 14px;
 
 #sidebarMenu {
     width: 20%;
-    top: 35px;
+    top: 40px;
     bottom: 0px;
     height: calc(100vh - 35px); /* Full height minus navbar height */
     z-index: 1000;
@@ -74,7 +74,7 @@ font-size: 14px;
 }
 
 .sidebar a{
-    font-size:10px;
+    font-size:12px;
 }
 .sidebar{
     display: block;
@@ -83,8 +83,8 @@ font-size: 14px;
 /* Media Query for small screens */
 @media only screen and (max-width: 780px) {
     #sidebarMenu {
-        width: 20%;
-        top: 35px;
+        width: 25%;
+        top: 40px;
         bottom: 0px;
         height: calc(100vh - 35px); /* Full height minus navbar height */
         z-index: 1000;
@@ -123,7 +123,7 @@ font-size: 14px;
 
 .content-area-user-dashboard {
     margin-left: 20%; /* Align the content next to the sidebar */
-    margin-top: 35px; /* Adjust to the height of the navbar */
+    margin-top: 40px; /* Adjust to the height of the navbar */
     padding: 10px; /* Add padding for better spacing */
 }
 
