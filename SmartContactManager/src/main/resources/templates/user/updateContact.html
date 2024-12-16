@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
 <head>
-    <!-- Character encoding for the page -->
     <meta charset="UTF-8">
-    <title>Add Contact</title>
-    <!-- External CSS files can be linked here if needed -->
+    <title>Update Contact</title>
 </head>
 <body>
 
 <section>
-
-    <!-- Main content container for user dashboard -->
+    <!-- Main Content Area for User Dashboard -->
     <div class="content-area-user-dashboard">
-
-        <!-- Sidebar toggle button -->
+        <!-- Sidebar Toggle Button -->
         <span>
             <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
         </span>
@@ -25,25 +21,30 @@
                 <i class="fa fa-close" style="font-size:18px"></i>
             </span>
 
-            <!-- Sidebar content -->
+            <!-- Sidebar Navigation Links -->
             <div class="position-sticky">
                 <div class="list-group list-group-flush mx-3 mt-4">
-                    <!-- Sidebar Menu Links -->
+                    <!-- Dashboard Link -->
                     <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                     </a>
+                    <!-- Add Contact Link -->
                     <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
                     </a>
+                    <!-- View Contacts Link -->
                     <a href="#" th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
                     </a>
+                    <!-- Profile Link -->
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
                     </a>
+                    <!-- Settings Link -->
                     <a href="#" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
                     </a>
+                    <!-- Logout Link -->
                     <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
                     </a>
@@ -52,32 +53,32 @@
         </div>
         <!-- END SIDE BAR -->
 
-        <!-- Container for the Add Contact Form -->
+        <!-- Contact Update Form Section -->
         <div class="container mt-5">
-            <!-- Card for the form -->
             <div class="card shadow">
-                <!-- Card Header -->
                 <div class="card-header bg-color-primary text-white">
-                    <h4 class="text-center">Add New Contact</h4>
+                    <h4 class="text-center">Update Contact</h4>
                 </div>
 
-                <!-- Card Body -->
                 <div class="card-body">
-                    <!-- Display any messages, e.g., success or error -->
+                    <!-- Displaying message if present -->
                     <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
                         <p th:text="${session.message.content}"></p>
                     </div>
+                    <!-- Remove message from session after displaying -->
                     <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
-                    <!-- End of message display -->
 
-                    <!-- Add Contact Form -->
-                    <form id="addContactForm"
+                    <!-- Contact Update Form -->
+                    <form id="updateContactForm"
                           th:object="${contact}"
                           enctype="multipart/form-data"
                           method="POST"
-                          th:action="@{/user/process-add-contact}">
+                          th:action="@{/user/process-update-contact}">
 
-                        <!-- Full Name -->
+                        <!-- Hidden Field to Store Contact ID -->
+                        <input type="hidden" id="contactID" name="contact_id" th:value="${contact.contact_id}">
+
+                        <!-- Name Field -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                             <input type="text" class="form-control" id="contactName" name="contact_name" placeholder="Full Name"
@@ -85,7 +86,7 @@
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_name')}" th:text="${e}"></div>
                         </div>
 
-                        <!-- Email Address -->
+                        <!-- Email Field -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             <input type="email" class="form-control" id="contactEmail" name="contact_email" placeholder="Email Address"
@@ -93,7 +94,7 @@
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_email')}" th:text="${e}"></div>
                         </div>
 
-                        <!-- Phone Number -->
+                        <!-- Phone Number Field -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             <input type="tel" class="form-control" id="contactPhone" name="phone_number" placeholder="Phone Number"
@@ -101,7 +102,7 @@
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('phone_number')}" th:text="${e}"></div>
                         </div>
 
-                        <!-- Nickname -->
+                        <!-- Nickname Field -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
                             <input type="text" class="form-control" id="contactNickname" name="contact_nickname" placeholder="Nickname"
@@ -109,7 +110,7 @@
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_nickname')}" th:text="${e}"></div>
                         </div>
 
-                        <!-- Work or Occupation -->
+                        <!-- Work Field -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
                             <input type="text" class="form-control" id="contactWork" name="contact_work" placeholder="Work or Occupation"
@@ -117,16 +118,17 @@
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('contact_work')}" th:text="${e}"></div>
                         </div>
 
-                        <!-- Image Upload -->
+                        <!-- Image URL Field -->
                         <div class="mb-3 input-group">
                             <span class="input-group-text"><i class="fas fa-image"></i></span>
                             <input type="file" accept=".png, .gif, .jpeg, .jpg" class="form-control" id="contactImage" name="contactImage">
                         </div>
 
-                        <!-- About Contact -->
-                        <div class="mb-3">
+                        <!-- About Contact Field -->
+                        <div class="mb-3 text-grid">
                             <label for="contactDescription">About Contact</label><br>
-                            <textarea rows="5" class="form-control" id="contactDescription" name="about_contact" th:classappend="${#fields.hasErrors('about_contact') ? 'is-invalid' : ''}" th:value="${contact.about_contact}"></textarea>
+                            <textarea rows="5" class="form-control" id="contactDescription" name="about_contact"
+                                      th:classappend="${#fields.hasErrors('about_contact') ? 'is-invalid' : ''}" th:text="${contact.about_contact}"></textarea>
                             <div class="invalid-feedback" th:each="e : ${#fields.errors('about_contact')}" th:text="${e}"></div>
                         </div>
 
@@ -141,9 +143,7 @@
             </div>
         </div>
     </div>
-
 </section>
 
-<!-- Optional JavaScript for interactivity -->
 </body>
 </html>

@@ -1,64 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace ="base::layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
 <head>
+    <!-- Meta data for character encoding -->
     <meta charset="UTF-8">
-    <title></title>
+    <title>Login - Smart Connect</title>
+    <!-- You can add other meta tags and stylesheets here -->
 </head>
+
 <body>
-<section class="h-100 gradient-form" style="background-color: #eee;">
-    <div class="container py-5 h-90">
+
+<!-- Main section for the gradient background -->
+<section class="h-100 gradient-form banner" >
+    <div class="container py-5 h-100">
+        <!-- Row for centering the login form -->
         <div class="row d-flex justify-content-center align-items-center h-90">
             <div class="col-xl-10">
-                <div class="card rounded-3 text-black ">
+                <!-- Card container for login form -->
+                <div class="card rounded-3 text-black">
                     <div class="row g-0">
+                        <!-- Left side with form -->
                         <div class="col-lg-6">
                             <div class="card-body p-md-5 mx-md-4">
 
+                                <!-- Logo section -->
                                 <div class="text-center">
-                                    <img src="/images/logo_smart_connect_.png"
-                                         style="width: 185px;" alt="logo">
-
+                                    <img src="/images/LoginPageImage.png" style="width: 185px; margin-bottom:20px" alt="logo">
                                 </div>
 
-                                <form id="login-form" class ="form"  th:action="@{/dologin}" method="post">
+                                <!-- Login form -->
+                                <form id="login-form" class="form" th:action="@{/dologin}" method="post" style="color:black">
+                                    <!-- Error message if login fails -->
                                     <div th:if="${param.error}" class="alert alert-danger">
                                         Invalid username or password
                                     </div>
 
+                                    <!-- Message if user logs out -->
                                     <div th:if="${param.Logout}" class="alert alert-danger">
-                                        you have been logged out
+                                        You have been logged out
                                     </div>
 
+                                    <!-- Username input field -->
                                     <div data-mdb-input-init class="form-outline mb-4">
-                                        <input type="email" id="username" class="form-control"
-                                               placeholder="Phone number or email address" name="username" />
+                                        <input type="email" id="username" class="form-control" placeholder="Phone number or email address" name="username" />
                                         <label class="form-label" for="username">Username</label>
                                     </div>
 
+                                    <!-- Password input field -->
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <input type="password" id="password" class="form-control" name="password" />
                                         <label class="form-label" for="password">Password</label>
                                     </div>
 
+                                    <!-- Login button and Forgot password link -->
                                     <div class="text-center pt-1 mb-5 pb-1">
-                                        <button href="/user/index" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log
-                                            in</button>
+                                        <button href="/user/index" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 custom-login-btn" type="submit">
+                                            Log in
+                                        </button>
                                         <a class="text-muted" href="#!">Forgot password?</a>
                                     </div>
 
+                                    <!-- Sign-up prompt for new users -->
                                     <div class="d-flex align-items-center justify-content-center pb-4">
                                         <p class="mb-0 me-2">Don't have an account?</p>
-                                        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger"><a href="/signup">Create new </a></button>
+                                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger">
+                                            <a href="/signup" style="text-decoration: none; color: inherit;">Create new</a>
+                                        </button>
                                     </div>
-
                                 </form>
 
                             </div>
                         </div>
+
+                        <!-- Right side with description -->
                         <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                             <div class="text-white px-3 py-4 p-md-5 mx-md-4">
                                 <h4 class="mb-4">Start with Smart Connect</h4>
-                                <p class="medium mb-2"> Intuitive app designed to help users efficiently manage and organize their contacts. </p>
+                                <p class="medium mb-2">Intuitive app designed to help users efficiently manage and organize their contacts.</p>
                             </div>
                         </div>
                     </div>

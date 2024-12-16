@@ -6,41 +6,56 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Represents a contact entity in the system.
+ * This class is mapped to the "contact_table" in the database.
+ * It contains information such as contact details, nickname, work, image, and the associated user.
+ */
 @Entity
 @Table(name = "contact_table")
 public class Contacts {
 
+    // Unique identifier for the contact
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int contact_id;
 
+    // Contact name with validation for blank and size
     @NotBlank(message = "Contact name is required")
     @Size(min = 3, max = 100, message = "Contact name must be between 3 and 100 characters")
     private String contact_name;
 
+    // Contact email with validation for blank and proper email format
     @NotBlank(message = "Email is required")
     @Email(message = "Please enter a valid email address")
     private String contact_email;
 
+    // Phone number with validation for exactly 10 digits
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be exactly 10 digits")
     private String phone_number;
 
+    // Nickname with validation for length between 2 and 50 characters
     @Size(min = 2, max = 50, message = "Nickname should be between 2 and 50 characters")
     private String contact_nickname;
 
+    // Contact's work or occupation with validation for length between 2 and 100 characters
     @Size(min = 2, max = 100, message = "Work should be between 2 and 100 characters")
     private String contact_work;
 
-    private String contact_image; // Will be handled for file upload in controller
+    // Contact image URL, handled in controller for file upload
+    private String contact_image;
 
+    // Association with the User entity (Many contacts can belong to one user)
     @ManyToOne
     private User user;
 
+    // Description about the contact with length validation between 10 and 500 characters
     @Size(min = 10, max = 500, message = "Description should be between 10 and 500 characters")
     private String about_contact;
 
     // Getters and Setters
+
     public int getContact_id() {
         return contact_id;
     }
@@ -113,11 +128,23 @@ public class Contacts {
         this.about_contact = about_contact;
     }
 
-    // Constructor
-
+    // Default constructor
     public Contacts() {
     }
 
+    /**
+     * Constructor to initialize all fields of the Contacts class.
+     *
+     * @param contact_id The contact's unique ID.
+     * @param contact_name The name of the contact.
+     * @param contact_email The email of the contact.
+     * @param phone_number The phone number of the contact.
+     * @param contact_nickname The nickname of the contact.
+     * @param contact_work The work or occupation of the contact.
+     * @param contact_image The image URL for the contact.
+     * @param user The user associated with the contact.
+     * @param about_contact A description of the contact.
+     */
     public Contacts(int contact_id, String contact_name, String contact_email, String phone_number, String contact_nickname, String contact_work, String contact_image, User user, String about_contact) {
         this.contact_id = contact_id;
         this.contact_name = contact_name;
@@ -130,6 +157,11 @@ public class Contacts {
         this.about_contact = about_contact;
     }
 
+    /**
+     * Returns a string representation of the Contacts object.
+     *
+     * @return A string containing the contact's details.
+     */
     @Override
     public String toString() {
         return "Contacts{" +
