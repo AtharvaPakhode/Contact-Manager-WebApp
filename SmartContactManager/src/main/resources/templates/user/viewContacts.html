@@ -52,12 +52,12 @@
             </div>
         </div>
         <!-- END SIDE BAR -->
-
         <!-- Contact Table Card -->
-        <div class="card text-center">
+
+        <div class="card shadow text-center">
             <div class="card-body">
                 <!-- Section Heading -->
-                <div style="font-weight:bold; margin-top: 10px;">
+                <div style="font-weight: bold; margin-top: 10px;">
                     <h3>Contacts</h3>
                 </div>
 
@@ -68,75 +68,77 @@
                 <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
                 <!-- End of Display Message -->
 
-                <!-- Contacts Table -->
-                <table class="table table-striped" style="margin-top: 50px !important;">
-                    <thead>
-                    <tr>
-                        <th scope="col">Contact ID</th>
-                        <th scope="col">Profile</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Nickname</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Work</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
+                <!-- Contacts Table (Responsive) -->
+                <div class="table-responsive" style="margin-top: 20px;">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Contact ID</th>
+                            <th scope="col">Profile</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Nickname</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Work</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <!-- Iterating over contacts and displaying data -->
-                    <tr th:each="c : ${contacts}">
-                        <!-- Display Contact ID -->
-                        <td th:text="${'CM-'+ c.contact_id}"></td>
+                        <tbody>
+                        <!-- Iterating over contacts and displaying data -->
+                        <tr th:each="c : ${contacts}">
+                            <!-- Display Contact ID -->
+                            <td th:text="${'CM-' + c.contact_id}"></td>
 
-                        <!-- Display Profile Image -->
-                        <td>
-                            <img class="my-profile-image" th:src="@{'/contact_images/' + ${c.contact_image}}" alt="Profile image" />
-                        </td>
+                            <!-- Display Profile Image -->
+                            <td>
+                                <img class="my-profile-image" th:src="@{'/contact_images/' + ${c.contact_image}}" alt="Profile image" />
+                            </td>
 
-                        <!-- Display Contact Name with link to contact details -->
-                        <td>
-                            <a th:href="@{'/user/show-contact-details/'+ ${c.contact_id}}" class="custom-link">
-                                <span th:text="${c.contact_name}"></span>
-                            </a>
-                        </td>
+                            <!-- Display Contact Name with link to contact details -->
+                            <td>
+                                <a th:href="@{'/user/show-contact-details/'+ ${c.contact_id}}" class="custom-link">
+                                    <span th:text="${c.contact_name}"></span>
+                                </a>
+                            </td>
 
-                        <!-- Display Nickname -->
-                        <td th:text="${c.contact_nickname}"></td>
+                            <!-- Display Nickname -->
+                            <td th:text="${c.contact_nickname}"></td>
 
-                        <!-- Display Email -->
-                        <td>
-                            <span th:text="${c.contact_email}"></span>
-                        </td>
+                            <!-- Display Email -->
+                            <td>
+                                <span th:text="${c.contact_email}"></span>
+                            </td>
 
-                        <!-- Display Phone Number -->
-                        <td th:text="${c.phone_number}"></td>
+                            <!-- Display Phone Number -->
+                            <td th:text="${c.phone_number}"></td>
 
-                        <!-- Display Work/Occupation -->
-                        <td th:text="${c.contact_work}"></td>
+                            <!-- Display Work/Occupation -->
+                            <td th:text="${c.contact_work}"></td>
 
-                        <!-- Edit Button for Contact -->
-                        <td>
-                            <form th:action="@{'/user/update-contact/'+${c.contact_id}}" method="post">
-                                <button type="submit" class="btn btn-warning btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background-color:#229799; color:white; border:none">
-                                    <i class="fas fa-edit"></i> Edit
+                            <!-- Edit Button for Contact -->
+                            <td>
+                                <form th:action="@{'/user/update-contact/'+${c.contact_id}}" method="post">
+                                    <button type="submit" class="gradient-custom-2 btn btn-warning btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background-color:#229799; color:white; border:none">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                </form>
+                            </td>
+
+                            <!-- Delete Button for Contact -->
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;" th:onclick="|deleteContact(${c.contact_id})|">
+                                    <i class="fas fa-trash"></i> Delete
                                 </button>
-                            </form>
-                        </td>
-
-                        <!-- Delete Button for Contact -->
-                        <td>
-                            <button type="button" class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;" th:onclick="|deleteContact(${c.contact_id})|">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <!-- Pagination for Navigating Contacts -->
-                <nav aria-label="Page navigation example" style="margin-top:20px;">
-                    <ul class="pagination">
+                <nav aria-label="Page navigation example" style="margin-top: 20px;">
+                    <ul class="pagination justify-content-center">
                         <!-- Previous Page Button -->
                         <li class="page-item" th:if="${currentPage != 0}">
                             <a class="page-link" th:href="@{/user/view-contact/{page}(page=${currentPage-1})}" aria-label="Previous">
@@ -161,6 +163,12 @@
                 </nav>
             </div>
         </div>
+
+
+
+
+
+
     </div>
 </section>
 </body>

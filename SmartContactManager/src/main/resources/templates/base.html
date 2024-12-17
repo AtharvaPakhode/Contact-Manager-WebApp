@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -31,11 +32,14 @@
 <!-- NAVIGATION_BAR -->
 <div>
     <!-- Navbar for navigation -->
-    <nav class="navbar navbar-expand-lg bg-color-primary text-white fixed-top">
+    <nav class="navbar navbar-expand-lg gradient-custom-2  text-white fixed-top" style="border-radius:0;">
         <div class="container-fluid">
             <!-- Navbar Brand: Name of the application -->
+            <div style="display:flex; align-items:center;">
+                <img src="/images/SmartConnectLogo.png" style="height:auto; width:35px">
+                <span class="navbar-brand">SmartConnect</span>
+            </div>
 
-            <span class="navbar-brand">SmartConnect</span>
 
             <!-- Navbar Toggle Button for Small Screens -->
             <button class="navbar-toggler"
@@ -49,7 +53,7 @@
             </button>
 
             <!-- Navbar Links -->
-            <div class="collapse navbar-collapse bg-color-primary text-white" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse  text-white" id="navbarNavAltMarkup">
                 <ul class="navbar-nav ms-auto">
                     <!-- Home link -->
                     <li><a class="nav-link text-white" th:href="@{/home}">HOME</a></li>

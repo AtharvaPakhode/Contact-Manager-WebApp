@@ -82,8 +82,8 @@
                 </div>
 
                 <!-- Contact Information Table -->
-                <div style="margin-top:40px;" class="text-center">
-                    <table class="table table-striped">
+                <div style="margin-top:40px;" class="text-center table-responsive">
+                    <table class="table  table-striped">
                         <tbody>
                         <!-- Displaying Contact's ID -->
                         <tr>
@@ -95,6 +95,11 @@
                         <tr>
                             <th scope="row" style="text-align: left; padding-left: 200px;">Name</th>
                             <td th:text="${contact.contact_name}" style="text-align: left; padding-left: 400px;"></td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" style="text-align: left; padding-left: 200px;">Nickname</th>
+                            <td th:text="${contact.contact_nickname}" style="text-align: left; padding-left: 400px;"></td>
                         </tr>
 
                         <!-- Displaying Contact's Email -->

@@ -7,13 +7,7 @@ body {
     padding: 0;
 }
 
-.bg-color-primary {
-    background-color: #229799;
-}
 
-.bg-color-secondary {
-    background-color: #f5f5f5;
-}
 
 .banner {
     width: 100%;
@@ -33,18 +27,20 @@ body {
     height: 40px;
 }
 .navbar-brand{
-font-size: 16px;
+    font-size: 15px;
+    margin-left: 10px;
 }
 
 .navbar-toggler-icon {
-    color: black;
+    color: white;
 }
 
 
 .navbar-nav .nav-link {
     padding-top: 5px;
     padding-bottom: 5px;
-    font-size: 14px;
+    font-size: 12px;
+    color:white;
 }
 
 
@@ -64,7 +60,7 @@ font-size: 16px;
     width: 20%;
     top: 40px;
     bottom: 0px;
-    height: calc(100vh - 35px); /* Full height minus navbar height */
+    height: calc(100vh - 40px); /* Full height minus navbar height */
     z-index: 1000;
 }
 
@@ -86,11 +82,11 @@ font-size: 16px;
         width: 25%;
         top: 40px;
         bottom: 0px;
-        height: calc(100vh - 35px); /* Full height minus navbar height */
+        height: calc(100vh - 40px); /* Full height minus navbar height */
         z-index: 1000;
     }
     .sidebar a{
-        font-size:8px;
+        font-size:10px;
     }
 
     .content-area-user-dashboard {
@@ -101,7 +97,6 @@ font-size: 16px;
     /* Optional: You can also add a hamburger icon or button to toggle sidebar visibility */
     .navbar .navbar-toggler {
         display: block;
-        color:white;
         z-index:1000;
     }
 
