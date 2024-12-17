@@ -1,88 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
 <head>
-    <!-- Meta data and title -->
+    <!-- Meta tag for character encoding and title of the page -->
     <meta charset="UTF-8">
     <title>SignUp</title>
-    </head>
+</head>
 <body>
 
 <!-- Banner Section - Centered Content -->
 <section style="padding-top: 80px;" class="banner d-flex justify-content-center align-items-center">
-    <div class="vh-60 vw-40">
-        <div class="container h-60 ">
+    <div class="vh-60">
+        <div class="container h-60">
             <div class="row d-flex justify-content-center align-items-center h-60">
-                <div class="col-lg-8 col-xl-7">
+                <div class="col-lg-12 col-xl-10">
+                    <!-- Card containing the registration form -->
                     <div class="card text-black bg-color-secondary" style="border-radius: 25px;">
                         <div class="card-body p-md-3">
                             <div class="row justify-content-center">
-                                <div class="col-md-9 col-lg-5 col-xl-7 order-2 order-lg-1"> <!-- Reduced column width by 20% -->
+                                <div class="col-md-9 col-lg-5 col-xl-7 order-2 order-lg-1">
 
-                                    <p class="text-center h1 fw-bold mb-4 mx-4 mx-md-4 mt-4" style="font-size: 1.6rem;color:black">Register Here</p> <!-- Reduced font size and margin -->
+                                    <!-- Display Message if exists (e.g., success or error messages) -->
+                                    <div th:if="${session.message}"
+                                         th:classappend="${session.message.type}"
+                                         class="alert alert-primary register-alert text-center"
+                                         role="alert">
+                                        <p th:text="${session.message.content}"></p>
+                                    </div>
 
+                                    <!-- Remove the message from the session after displaying -->
+                                    <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+
+                                    <!-- Title for the Registration Form -->
+                                    <p class="text-center h1 fw-bold mb-4 mx-4 mx-md-4 mt-4" style="font-size: 1.6rem;color:black">
+                                        Register Here
+                                    </p>
+
+                                    <!-- User Registration Form -->
                                     <form id="user-registration-form" th:action="@{/register}" method="post" th:object="${user}" class="mx-1 mx-md-3">
 
-                                        <!-- User Name Input -->
-                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;"> <!-- Reduced margin bottom -->
-                                            <i class="fas fa-user fa-lg me-2 fa-fw"></i> <!-- Reduced icon margin -->
+                                        <!-- User Name Input Field -->
+                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;">
+                                            <i class="fas fa-user fa-lg me-2 fa-fw"></i> <!-- User icon -->
                                             <div data-mdb-input-init class="form-outline flex-fill mb-0" style="max-width: 150%;">
-                                                <input type="text" class="form-control" th:classappend="${#fields.hasErrors('user_name') ? 'is-invalid' : ''}"
-                                                       id="user_name" name="user_name" placeholder="Enter your name" th:value="${user.user_name}" />
-
+                                                <input type="text" class="form-control"
+                                                       th:classappend="${#fields.hasErrors('user_name') ? 'is-invalid' : ''}"
+                                                       id="user_name" name="user_name"
+                                                       placeholder="Enter your name" th:value="${user.user_name}" />
+                                                <!-- Error message for the user name field -->
+                                                <div class="invalid-feedback" th:each="e : ${#fields.errors('user_name')}" th:text="${e}"></div>
                                             </div>
                                         </div>
-                                        <div class="invalid-feedback" th:each="e : ${#fields.errors('user_name')}" th:text="${e}"></div>
 
-                                        <!-- Email Input -->
-                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;"> <!-- Reduced margin bottom -->
-                                            <i class="fas fa-envelope fa-lg me-2 fa-fw"></i> <!-- Reduced icon margin -->
+                                        <!-- Email Input Field -->
+                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;">
+                                            <i class="fas fa-envelope fa-lg me-2 fa-fw"></i> <!-- Email icon -->
                                             <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                                <input type="email" class="form-control" th:classappend="${#fields.hasErrors('user_email') ? 'is-invalid' : ''}"
-                                                       id="user_email" name="user_email" placeholder="Enter your email" th:value="${user.user_email}" />
-
+                                                <input type="email" class="form-control"
+                                                       th:classappend="${#fields.hasErrors('user_email') ? 'is-invalid' : ''}"
+                                                       id="user_email" name="user_email"
+                                                       placeholder="Enter your email" th:value="${user.user_email}" />
+                                                <!-- Error message for the email field -->
+                                                <div class="invalid-feedback" th:each="e : ${#fields.errors('user_email')}" th:text="${e}"></div>
                                             </div>
                                         </div>
-                                        <div class="invalid-feedback" th:each="e : ${#fields.errors('user_email')}" th:text="${e}"></div>
 
-                                        <!-- Password Input -->
-                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;"> <!-- Reduced margin bottom -->
-                                            <i class="fas fa-lock fa-lg me-2 fa-fw"></i> <!-- Reduced icon margin -->
+                                        <!-- Password Input Field -->
+                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;">
+                                            <i class="fas fa-lock fa-lg me-2 fa-fw"></i> <!-- Lock icon -->
                                             <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                                                <input type="password" class="form-control" th:classappend="${#fields.hasErrors('user_password') ? 'is-invalid' : ''}"
+                                                <input type="password" class="form-control"
+                                                       th:classappend="${#fields.hasErrors('user_password') ? 'is-invalid' : ''}"
                                                        id="user_password" name="user_password" placeholder="Password" />
-
                                             </div>
                                         </div>
-                                        <div class="invalid-feedback" th:each="e : ${#fields.errors('user_password')}" th:text="${e}"></div>
 
                                         <!-- About User Textarea -->
-                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;"> <!-- Reduced margin bottom -->
-                                            <i class="fas fa-pencil-alt fa-lg me-2 fa-fw"></i> <!-- Reduced icon margin -->
+                                        <div class="d-flex flex-row align-items-center mb-2" style="color:black;">
+                                            <i class="fas fa-pencil-alt fa-lg me-2 fa-fw"></i> <!-- Pencil icon -->
                                             <div class="form-outline flex-fill mb-0">
                                                 <textarea class="form-control" id="about_user" name="about_user" placeholder="Write about you"></textarea>
-
                                             </div>
                                         </div>
 
                                         <!-- Agreement Checkbox -->
-                                        <div class="form-check d-flex justify-content-center mb-3" style="color:black;"> <!-- Reduced margin bottom -->
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="agreement" name="agreement" /> <!-- Reduced icon margin -->
-                                            <label class="form-check-label" for="agreement" >
+                                        <div class="form-check d-flex justify-content-center mb-3" style="color:black;">
+                                            <input class="form-check-input me-1" type="checkbox" id="agreement" name="agreement"/>
+                                            <label class="form-check-label" for="agreement">
                                                 I agree to the terms and conditions
                                             </label>
                                         </div>
 
-                                        <!-- Form Submission Button -->
-                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 ">
-                                            <button type="submit" class="btn btn-primary gradient-custom-2  btn-lg" style="border:none">Register</button>
+                                        <!-- Form Submission Buttons -->
+                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                            <!-- Reset Button -->
+                                            <button type="reset" class="btn btn-primary btn-danger" style="margin-right:10px;">Reset</button>
+                                            <!-- Submit Button -->
+                                            <button type="submit" class="btn btn-primary gradient-custom-2 btn-lg" style="border:none">Register</button>
                                         </div>
 
                                     </form>
 
                                 </div>
-                                <div class="col-md-9 col-lg-5 col-xl-5 d-flex align-items-center order-1 order-lg-2 gradient-custom-2"> <!-- Reduced column width by 20% -->
-                                    <img src="/images/RegisterPageImage.png"
-                                         class="img-fluid" alt="Sample image">
+                                <!-- Right Column with Image -->
+                                <div class="col-md-9 col-lg-5 col-xl-5 d-flex align-items-center order-1 order-lg-2 gradient-custom-2">
+                                    <img src="/images/RegisterPageImage.png" class="img-fluid" alt="Sample image">
                                 </div>
                             </div>
                         </div>
@@ -91,9 +112,6 @@
             </div>
         </div>
     </div>
-
-
-
 </section>
 
 </body>
