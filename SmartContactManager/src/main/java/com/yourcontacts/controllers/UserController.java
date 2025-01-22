@@ -74,11 +74,17 @@ public class UserController {
         String name = principal.getName();
         User user = this.userRepo.getUserByName(name);
 
+        int contactCount = this.contactRepo.countactCountByUser(user.getUser_id());
+
 
         model.addAttribute("title", "Dashboard");
+        model.addAttribute("contactCount",contactCount);
 
         return "user/user_dashboard";
     }
+
+
+
 
 
     @GetMapping("/profile")

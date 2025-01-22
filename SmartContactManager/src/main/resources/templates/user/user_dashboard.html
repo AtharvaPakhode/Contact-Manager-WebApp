@@ -64,6 +64,15 @@
 
         <div class="banner">
 
+            <div class="card" style="width: 18rem;color:black;">
+                <img class="card-img-top" src="/images/ContactSaved.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Total Contact</h5>
+                    <p class="card-text">You have  <span th:text="${contactCount}"> </span>  contacts saved.</p>
+                    <a th:href="@{/user/view-contact/0}" style="border:none;" class="btn btn-primary gradient-custom-2 ">Click to view</a>
+                </div>
+            </div>
+
         </div>
 
 
