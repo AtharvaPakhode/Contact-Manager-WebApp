@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -69,8 +70,29 @@ public class UserController {
      */
     @GetMapping("/index")
     public String dashboard(Model model, Principal principal){
+
+        String name = principal.getName();
+        User user = this.userRepo.getUserByName(name);
+
+
         model.addAttribute("title", "Dashboard");
+
         return "user/user_dashboard";
+    }
+
+
+    @GetMapping("/profile")
+    public String userProfile(Model model, Principal principal){
+
+        String name = principal.getName();
+        User user = this.userRepo.getUserByName(name);
+
+
+
+
+        model.addAttribute("title", "Profile");
+
+        return "user/userProfile";
     }
 
 
@@ -120,13 +142,33 @@ public class UserController {
 
             String name = principal.getName();
             User user = this.userRepo.getUserByName(name);
+            contact.setUser(user);
+
+            Contacts savedContact = this.contactRepo.save(contact);
+            this.userRepo.save(user);
+
+
 
             // Process and upload the contact image
             if (contactImage.isEmpty()) {
                 contact.setContact_image("contactDefault.png");
             } else {
                 // Upload image to folder and update the contact image name
-                contact.setContact_image(contactImage.getOriginalFilename());
+
+                // Step 1: Get the original filename
+                String originalFilename = contactImage.getOriginalFilename();
+
+                // Step 2: Get the Contact ID
+                String contactID = String.valueOf(savedContact.getContact_id());
+
+                // Step 3: Extract the file extension (e.g., ".jpg")
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+                // Step 4: Create a new filename with the format "photo_username.jpg"
+                String imgName = contactID +"_"+"profile"+ fileExtension;
+
+                // Step 5: Set the contact image filename
+                contact.setContact_image(imgName);
                 String folderPath = "static/contact_images";
                 File directory = new File(folderPath);
 
@@ -134,15 +176,15 @@ public class UserController {
                     directory.mkdirs();
                 }
 
-                Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + contactImage.getOriginalFilename());
+                Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + imgName);
                 Files.copy(contactImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            contact.setUser(user);
-            user.getContact_list().add(contact);
-            this.userRepo.save(user);
+            this.contactRepo.save(contact);
 
             session.setAttribute("message", new Message("Contact Saved", "alert-success"));
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -273,13 +315,16 @@ public class UserController {
     @PostMapping("/update-contact/{contactID}")
     public String updateContact(@PathVariable("contactID") Integer contact_id,
                                 Model model,
-                                Principal principal) {
+                                Principal principal)  {
+
+
 
         String name = principal.getName();
         User loginUser = this.userRepo.getUserByName(name);
 
         Optional<Contacts> contactOptional = this.contactRepo.findById(contact_id);
         Contacts contactToBeUpdated = contactOptional.get();
+
 
         model.addAttribute("contact", contactToBeUpdated);
 
@@ -336,7 +381,10 @@ public class UserController {
             }
 
             // Step 2: Upload the new image (if provided)
-            if (!contactImage.isEmpty()) {
+            if (contactImage.isEmpty()) {
+                existingContact.setContact_image("contactDefault.png");
+            }
+            else if (!contactImage.isEmpty()) {
                 String folderPath = "static/contact_images";
                 File directory = new File(folderPath);
 
@@ -344,10 +392,25 @@ public class UserController {
                     directory.mkdirs();
                 }
 
-                Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + contactImage.getOriginalFilename());
+                // Step 1: Get the original filename
+                String originalFilename = contactImage.getOriginalFilename();
+
+                // Step 2: Get the existing contact ID
+                String contactID = String.valueOf(existingContact.getContact_id());
+
+                // Step 3: Extract the file extension (e.g., ".jpg")
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+                // Step 4: Create a new filename with the format "photo_username.jpg"
+                String imgName =  contactID +"_"+ "profile" + fileExtension;
+
+                // Step 5: Set the contact image filename
+                contact.setContact_image(imgName);
+
+                Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + imgName);
                 Files.copy(contactImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-                existingContact.setContact_image(contactImage.getOriginalFilename());
+                existingContact.setContact_image(imgName);
             }
 
             // Step 3: Update the contact details
@@ -366,5 +429,50 @@ public class UserController {
         }
 
         return "redirect:/user/show-contact-details/" + contact.getContact_id();
+    }
+
+
+
+    @PostMapping("/process-profile-image-form")
+    public String profileImageUpdate(Model model,
+                                     Principal principal,
+                                    @RequestParam("profileImage") MultipartFile profileImage) throws IOException {
+
+        String name = principal.getName();
+        User user = this.userRepo.getUserByName(name);
+
+        // Upload image to folder and update the user profile image name
+
+        // Step 1: Get the original filename
+        String originalFilename = profileImage.getOriginalFilename();
+
+        // Step 2: Get the User ID
+        String userID = String.valueOf(user.getUser_id());
+
+        // Step 3: Extract the file extension (e.g., ".jpg")
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        // Step 4: Create a new filename with the format "photo_username.jpg"
+        String imgName = userID +"_"+"profile"+ fileExtension;
+
+        // Step 5: Set the contact image filename
+        user.setImage_URL(imgName);
+        String folderPath = "static/user_profile_images";
+        File directory = new File(folderPath);
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        Path targetLocation = Paths.get(directory.getAbsolutePath() + File.separator + imgName);
+        Files.copy(profileImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+        this.userRepo.save(user);
+
+        model.addAttribute("user",user);
+
+
+        return "user/userProfile";
+
     }
 }

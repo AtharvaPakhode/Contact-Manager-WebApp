@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+    <!-- Meta tag for character encoding -->
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <!-- External stylesheets or inline styles can be added here -->
+
+
+
+</head>
+<body>
+
+<!-- Main content area for the user dashboard -->
+<section>
+
+    <!-- Content container for user dashboard -->
+    <div class="content-area-user-dashboard">
+
+        <!-- Toggle button to open and close sidebar -->
+        <span>
+            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
+        </span>
+
+        <!-- Sidebar section -->
+        <div id="sidebarMenu" class="sidebar bg-white">
+            <!-- Close button to hide the sidebar -->
+            <span onclick="toggleSideBar()" class="crsbtn">
+                <i class="fa fa-close" style="font-size:18px"></i>
+            </span>
+
+            <!-- Sticky position for sidebar items -->
+            <div class="position-sticky">
+
+                <!-- Sidebar menu items -->
+                <div class="list-group list-group-flush mx-3 mt-4">
+
+                    <!-- Dashboard link -->
+                    <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+                    </a>
+
+                    <!-- Add Contact link -->
+                    <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
+                    </a>
+
+                    <!-- View Contacts link -->
+                    <a th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
+                    </a>
+
+                    <!-- Profile link (currently inactive) -->
+                    <a th:href="@{/user/profile}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
+                    </a>
+
+                    <!-- Logout link -->
+                    <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
+                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="vh-100" style="background-color: #f4f5f7;" >
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col col-lg-10 mb-4 mb-lg-0">
+                        <div class="card mb-3" style="border-radius: .5rem;">
+                            <div class="row g-0">
+
+                                <div class="col-md-4 gradient-custom-2 text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                    <div class="imageContainer1" th:object="${user}">
+
+                                        <img id="profileImage1"
+                                             th:src="${user.image_URL == 'contactDefault.png' ? '/contact_images/contactDefault.png' : '/user_profile_images/' + user.image_URL}"
+                                             alt="image"
+                                             class="img-fluid"
+                                             style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 0.5rem; margin-top: 2rem" />
+
+                                        <form method="post" th:action="@{/user/process-profile-image-form}" enctype="multipart/form-data" style="margin-top: 15px;">
+                                            <button type="button" class="btn btn-light btn-sm btn-animated" onclick="document.getElementById('uploadProfileImage').click();">
+                                                Change Profile Image
+                                            </button>
+                                            <input type="file" name="profileImage" id="uploadProfileImage" style="display: none;" onchange="this.form.submit();" />
+                                        </form>
+
+
+                                    </div>
+
+
+                                    <h5 th:text="${user.user_name}"  style="margin-top:2rem;"></h5>
+                                </div>
+
+
+
+
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <h6>Profile</h6>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Email</h6>
+                                                <p class="text-muted" th:text="${user.user_email}"></p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>ID</h6>
+                                                <p class="text-muted" th:text="${user.user_id}"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+
+                                            <div class="col-6 mb-3">
+                                                <h6>Role</h6>
+                                                <p class="text-muted" th:text="${user.user_role == 'ROLE_USER' ? 'User' : 'Admin'}"></p>
+                                            </div>
+
+                                            <div class="col-6 mb-3">
+                                                <h6>Status</h6>
+                                                <p class="text-muted" th:text="${user.status ? 'Active' : 'Inactive'}"></p>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="card w-auto text-center" style="margin-top:40px;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: large; font-weight: bold;">About You</h5>
+                                <p th:text="${user.about_user}" class="card-text"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- End Content Area -->
+
+</section>
+
+<!-- Optional external scripts can be included here (for toggle functionality and other interactivity) -->
+
+</body>
+</html>

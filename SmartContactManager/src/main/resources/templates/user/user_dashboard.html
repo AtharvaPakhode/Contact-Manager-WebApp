@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>User Dashboard</title>
     <!-- External stylesheets or inline styles can be added here -->
+
 </head>
 <body>
 
@@ -16,15 +17,15 @@
 
         <!-- Toggle button to open and close sidebar -->
         <span>
-                <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
-            </span>
+            <i onclick="toggleSideBar()" class="fa fa-sign-in toggle-button in-button" style="font-size:20px;color:black"></i>
+        </span>
 
         <!-- Sidebar section -->
         <div id="sidebarMenu" class="sidebar bg-white">
             <!-- Close button to hide the sidebar -->
             <span onclick="toggleSideBar()" class="crsbtn">
-                    <i class="fa fa-close" style="font-size:18px"></i>
-                </span>
+                <i class="fa fa-close" style="font-size:18px"></i>
+            </span>
 
             <!-- Sticky position for sidebar items -->
             <div class="position-sticky">
@@ -48,13 +49,8 @@
                     </a>
 
                     <!-- Profile link (currently inactive) -->
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                    <a th:href="@{/user/profile}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
-                    </a>
-
-                    <!-- Settings link (currently inactive) -->
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-                        <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
                     </a>
 
                     <!-- Logout link -->
@@ -65,6 +61,13 @@
             </div>
         </div>
         <!-- End Sidebar -->
+
+        <div class="banner">
+
+        </div>
+
+
+
 
     </div>
     <!-- End Content Area -->

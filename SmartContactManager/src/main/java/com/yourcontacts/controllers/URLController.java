@@ -113,7 +113,7 @@ public class URLController {
             // Set default properties for the new user
             user.setUser_role("ROLE_USER");
             user.setStatus(true);
-            user.setImageURL("default.png");
+            user.setImage_URL("contactDefault.png");
 
             // Encrypt the password before saving
             System.out.println("Original password: " + user.getUser_password());
