@@ -26,4 +26,9 @@ public interface ContactRepository extends JpaRepository<Contacts, Integer> {
     @Query("from Contacts c where c.user.user_id = :id")
     Page<Contacts> findContactByUser(@Param("id") int id, Pageable pageable);
 
+
+    @Query("SELECT COUNT(c) FROM Contacts c WHERE c.user.user_id = :id")
+    int countactCountByUser(@Param("id") int id);
+
+
 }

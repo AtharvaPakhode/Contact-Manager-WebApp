@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <title>User Profile</title>
     <!-- External stylesheets or inline styles can be added here -->
-
-
-
 </head>
 <body>
 
@@ -64,39 +61,39 @@
         </div>
         <!-- End Sidebar -->
 
-        <div class="vh-100" style="background-color: #f4f5f7;" >
+        <!-- Main content area -->
+        <div class="vh-100" style="background-color: #f4f5f7;">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-10 mb-4 mb-lg-0">
                         <div class="card mb-3" style="border-radius: .5rem;">
                             <div class="row g-0">
 
+                                <!-- Left section with user image and profile actions -->
                                 <div class="col-md-4 gradient-custom-2 text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                     <div class="imageContainer1" th:object="${user}">
 
+                                        <!-- Display user's profile image, with default fallback if not set -->
                                         <img id="profileImage1"
                                              th:src="${user.image_URL == 'contactDefault.png' ? '/contact_images/contactDefault.png' : '/user_profile_images/' + user.image_URL}"
                                              alt="image"
                                              class="img-fluid"
                                              style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 0.5rem; margin-top: 2rem" />
 
+                                        <!-- Form to change profile image -->
                                         <form method="post" th:action="@{/user/process-profile-image-form}" enctype="multipart/form-data" style="margin-top: 15px;">
                                             <button type="button" class="btn btn-light btn-sm btn-animated" onclick="document.getElementById('uploadProfileImage').click();">
                                                 Change Profile Image
                                             </button>
                                             <input type="file" name="profileImage" id="uploadProfileImage" style="display: none;" onchange="this.form.submit();" />
                                         </form>
-
-
                                     </div>
 
-
-                                    <h5 th:text="${user.user_name}"  style="margin-top:2rem;"></h5>
+                                    <!-- Display user's name -->
+                                    <h5 th:text="${user.user_name}" style="margin-top:2rem;"></h5>
                                 </div>
 
-
-
-
+                                <!-- Right section with user profile details -->
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <h6>Profile</h6>
@@ -123,17 +120,12 @@
                                                 <p class="text-muted" th:text="${user.status ? 'Active' : 'Inactive'}"></p>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
 
-
+                        <!-- About User section -->
                         <div class="card w-auto text-center" style="margin-top:40px;">
                             <div class="card-body">
                                 <h5 class="card-title" style="font-size: large; font-weight: bold;">About You</h5>
@@ -145,8 +137,6 @@
                 </div>
             </div>
         </div>
-
-
 
     </div>
     <!-- End Content Area -->
