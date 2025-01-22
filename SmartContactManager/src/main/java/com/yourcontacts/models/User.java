@@ -95,11 +95,11 @@ public class User {
         this.user_role = user_role;
     }
 
-    public String getImageURL() {
+    public String getImage_URL() {
         return image_URL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImage_URL(String imageURL) {
         this.image_URL = imageURL;
     }
 

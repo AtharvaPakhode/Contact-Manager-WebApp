@@ -22,30 +22,38 @@
 
         <!-- SIDE BAR -->
         <div id="sidebarMenu" class="sidebar bg-white">
-            <!-- Close Button for Sidebar -->
+            <!-- Close button to hide the sidebar -->
             <span onclick="toggleSideBar()" class="crsbtn">
                 <i class="fa fa-close" style="font-size:18px"></i>
             </span>
 
-            <!-- Sidebar content -->
+            <!-- Sticky position for sidebar items -->
             <div class="position-sticky">
+
+                <!-- Sidebar menu items -->
                 <div class="list-group list-group-flush mx-3 mt-4">
-                    <!-- Sidebar Menu Links -->
+
+                    <!-- Dashboard link -->
                     <a th:href="@{/user/index}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                         <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                     </a>
+
+                    <!-- Add Contact link -->
                     <a th:href="@{/user/add-contact}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-plus fa-fw me-3"></i><span>Add Contact</span>
                     </a>
-                    <a href="#" th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
+
+                    <!-- View Contacts link -->
+                    <a th:href="@{/user/view-contact/0}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-address-card fa-fw me-3"></i><span>View Contacts</span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+
+                    <!-- Profile link (currently inactive) -->
+                    <a th:href="@{/user/profile}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-user-circle fa-fw me-3"></i><span>Profile</span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-                        <i class="fas fa-cogs fa-fw me-3"></i><span>Settings</span>
-                    </a>
+
+                    <!-- Logout link -->
                     <a th:href="@{/logout}" class="list-group-item list-group-item-action py-2 ripple">
                         <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
                     </a>
@@ -66,7 +74,7 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <!-- Display any messages, e.g., success or error -->
-                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary" role="alert">
+                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert alert-primary text-center" role="alert">
                         <p th:text="${session.message.content}"></p>
                     </div>
                     <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
@@ -146,6 +154,6 @@
 
 </section>
 
-<!-- Optional JavaScript for interactivity -->
+
 </body>
 </html>

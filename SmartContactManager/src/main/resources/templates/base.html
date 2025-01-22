@@ -32,7 +32,7 @@
 <!-- NAVIGATION_BAR -->
 <div>
     <!-- Navbar for navigation -->
-    <nav class="navbar navbar-expand-lg gradient-custom-2  text-white fixed-top" style="border-radius:0;">
+    <nav class="navbar navbar-expand-lg gradient-custom-2   text-white fixed-top" style="border-radius:0;">
         <div class="container-fluid">
             <!-- Navbar Brand: Name of the application -->
             <div style="display:flex; align-items:center;">
@@ -53,12 +53,10 @@
             </button>
 
             <!-- Navbar Links -->
-            <div class="collapse navbar-collapse  text-white" id="navbarNavAltMarkup">
-                <ul class="navbar-nav ms-auto">
+            <div class="collapse navbar-collapse text-white" id="navbarNavAltMarkup" style="border-top-left-radius:0.3rem;border-bottom-left-radius:0.3rem">
+                <ul class="navbar-nav ms-auto " id="navbarList">
                     <!-- Home link -->
                     <li><a class="nav-link text-white" th:href="@{/home}">HOME</a></li>
-                    <!-- About link -->
-                    <li><a class="nav-link text-white" th:href="@{/about}">ABOUT</a></li>
                     <!-- Login link -->
                     <li><a class="nav-link text-white" th:href="@{/signin}">LOGIN</a></li>
                     <!-- Sign Up link -->
@@ -79,28 +77,7 @@
 <script th:src="@{/javascript/script.js}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- Script to Handle Contact Deletion with Confirmation -->
-<script>
-    // Function to confirm and delete a contact
-    function deleteContact(id){
-        // Display confirmation popup
-        swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this contact.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true, // Highlight the danger mode for deletion
-            })
-            .then((willDelete) => {
-                // If user confirms deletion, redirect to the deletion endpoint
-                if (willDelete) {
-                    window.location = "/user/delete-contact/" + id;
-                } else {
-                    swal("Your Contact is safe"); // Show message if user cancels deletion
-                }
-            });
-    }
-</script>
+
 
 </body>
 </html>

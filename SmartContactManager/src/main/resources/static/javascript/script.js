@@ -43,3 +43,28 @@ window.addEventListener("resize", () => {
 
 
 
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Script loaded");
+    const toggleButton = document.querySelector(".navbar-toggler");
+    const navbarLinks = document.querySelector("#navbarNavAltMarkup");
+    const navbarList = document.querySelector("#navbarList");
+
+    if (toggleButton && navbarLinks) {
+        console.log("Elements found");
+        toggleButton.addEventListener("click", function () {
+            navbarLinks.classList.toggle("gradient-custom-2");
+            navbarList.classList.toggle("ms-3");
+            navbarList.classList.toggle("ms-auto");
+            console.log("Class toggled:", navbarLinks.classList);
+            console.log("Class toggled:", navbarList.classList);
+        });
+    } else {
+        console.error("Required elements not found");
+    }
+});
+
+
+

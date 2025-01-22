@@ -47,9 +47,24 @@
                                     </div>
 
                                     <!-- Password input field -->
-                                    <div data-mdb-input-init class="form-outline mb-4">
+                                    <div data-mdb-input-init class="form-outline mb-4" style="position: relative;">
+                                        <!-- Password Input Field -->
                                         <input type="password" id="password" class="form-control" name="password" />
                                         <label class="form-label" for="password">Password</label>
+
+                                        <!-- Eye Icon Button -->
+                                        <button type="button" id="togglePassword" class="eye-button"
+                                        style="background: transparent;
+                                                border: none;
+                                                cursor: pointer;
+                                                position: absolute;
+                                                right: 10px;
+                                                top: 25%;
+                                                transform: translateY(-50%);
+                                                z-index: 1;">
+
+                                            <i id="eyeIcon" class="fas fa-eye"></i> <!-- Font Awesome Eye Icon -->
+                                        </button>
                                     </div>
 
                                     <!-- Login button and Forgot password link -->
@@ -57,7 +72,7 @@
                                         <button href="/user/index" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 custom-login-btn" type="submit">
                                             Log in
                                         </button>
-                                        <a class="text-muted" href="#!">Forgot password?</a>
+
                                     </div>
 
                                     <!-- Sign-up prompt for new users -->
@@ -84,7 +99,29 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            // Get the password field and the eye icon
+            var passwordField = document.getElementById('password');
+            var eyeIcon = document.getElementById('eyeIcon');
+
+            // Toggle the password field's type between 'password' and 'text'
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text'; // Show password
+                eyeIcon.classList.remove('fa-eye'); // Change icon to "eye-slash"
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password'; // Hide password
+                eyeIcon.classList.remove('fa-eye-slash'); // Change icon back to "eye"
+                eyeIcon.classList.add('fa-eye');
+            }
+        });
+    </script>
 </section>
+
+
+
+
 
 </body>
 </html>
