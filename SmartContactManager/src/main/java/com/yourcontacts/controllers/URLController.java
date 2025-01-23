@@ -99,7 +99,6 @@ public class URLController {
         try {
             // Check if user has agreed to the terms and conditions
             if (!agreement) {
-                System.out.println("Please agree to the terms and conditions");
                 throw new Exception("Please agree to the terms and conditions");
             }
 
@@ -116,9 +115,8 @@ public class URLController {
             user.setImage_URL("contactDefault.png");
 
             // Encrypt the password before saving
-            System.out.println("Original password: " + user.getUser_password());
             user.setUser_password(passwordEncoder.encode(user.getUser_password()));
-            System.out.println("Encrypted password: " + user.getUser_password());
+
 
             // Save the user to the database
             User saved_user = this.userRepo.save(user);

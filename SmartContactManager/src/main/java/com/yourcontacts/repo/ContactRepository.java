@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface ContactRepository extends JpaRepository<Contacts, Integer> {
 
+
     /**
      * Custom method to find contacts belonging to a specific user by their user ID.
      * The method uses pagination to retrieve contacts in a paged manner.
@@ -27,6 +28,12 @@ public interface ContactRepository extends JpaRepository<Contacts, Integer> {
     Page<Contacts> findContactByUser(@Param("id") int id, Pageable pageable);
 
 
+    /**
+     * Custom method to find number of contacts belonging to a specific user by their user ID.
+     *
+     * @param id The user ID for which contacts are to be fetched.
+     * @return Number of Contacts associated with the specified user ID.
+     */
     @Query("SELECT COUNT(c) FROM Contacts c WHERE c.user.user_id = :id")
     int countactCountByUser(@Param("id") int id);
 
