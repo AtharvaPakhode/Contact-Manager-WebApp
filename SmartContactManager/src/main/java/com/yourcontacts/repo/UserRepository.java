@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
-     * Custom method to find a user by their email address.
+     *  Custom method to find a user by their email address.
      * This method searches for a User entity based on the provided email address.
      *
      * @param email The email address of the user to be fetched.

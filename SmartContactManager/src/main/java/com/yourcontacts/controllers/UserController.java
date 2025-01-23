@@ -42,34 +42,30 @@ public class UserController {
     private ContactRepository contactRepo;
 
 
-
-
     /**
      * This method adds the current user's information to the model for every request.
      * It ensures that the username and user details are available in the views.
      *
-     * @param model The model to add attributes to the view
+     * @param model     The model to add attributes to the view
      * @param principal The principal object that holds the current user's information
      */
     @ModelAttribute
-    public void addCommonData(Model model, Principal principal){
+    public void addCommonData(Model model, Principal principal) {
         String username = principal.getName();
         User user = userRepo.getUserByName(username);
         model.addAttribute("user", user);
     }
 
 
-
-
     /**
      * Displays the user dashboard.
      *
-     * @param model The model object that holds the data for the view
+     * @param model     The model object that holds the data for the view
      * @param principal The current authenticated user
      * @return the name of the view (user_dashboard)
      */
     @GetMapping("/index")
-    public String dashboard(Model model, Principal principal){
+    public String dashboard(Model model, Principal principal) {
 
         String name = principal.getName();
         User user = this.userRepo.getUserByName(name);
@@ -78,17 +74,14 @@ public class UserController {
 
 
         model.addAttribute("title", "Dashboard");
-        model.addAttribute("contactCount",contactCount);
+        model.addAttribute("contactCount", contactCount);
 
         return "user/user_dashboard";
     }
 
 
-
-
-
     @GetMapping("/profile")
-    public String userProfile(Model model, Principal principal){
+    public String userProfile(Model model, Principal principal) {
 
         String name = principal.getName();
         User user = this.userRepo.getUserByName(name);
@@ -100,8 +93,6 @@ public class UserController {
     }
 
 
-
-
     /**
      * Displays the form to add a new contact.
      *
@@ -109,24 +100,22 @@ public class UserController {
      * @return the name of the view (addContactForm)
      */
     @GetMapping("/add-contact")
-    public String addContactForm(Model model){
+    public String addContactForm(Model model) {
         model.addAttribute("title", "Add Contact");
         model.addAttribute("contact", new Contacts());
         return "user/addContactForm";
     }
 
 
-
-
     /**
      * Processes the form to save a new contact.
      *
-     * @param contact The contact object submitted from the form
+     * @param contact       The contact object submitted from the form
      * @param bindingResult Holds validation errors, if any
-     * @param model The model object to hold attributes for the view
-     * @param principal The current authenticated user
-     * @param contactImage The contact's image to be uploaded
-     * @param session The session object to store messages for the user
+     * @param model         The model object to hold attributes for the view
+     * @param principal     The current authenticated user
+     * @param contactImage  The contact's image to be uploaded
+     * @param session       The session object to store messages for the user
      * @return the name of the view (addContactForm)
      */
     @PostMapping("/process-add-contact")
@@ -152,7 +141,6 @@ public class UserController {
             this.userRepo.save(user);
 
 
-
             // Process and upload the contact image
             if (contactImage.isEmpty()) {
                 contact.setContact_image("contactDefault.png");
@@ -169,7 +157,7 @@ public class UserController {
                 String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
                 // Step 4: Create a new filename with the format "photo_username.jpg"
-                String imgName = contactID +"_"+"profile"+ fileExtension;
+                String imgName = contactID + "_" + "profile" + fileExtension;
 
                 // Step 5: Set the contact image filename
                 contact.setContact_image(imgName);
@@ -189,7 +177,6 @@ public class UserController {
             session.setAttribute("message", new Message("Contact Saved", "alert-success"));
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,13 +185,11 @@ public class UserController {
     }
 
 
-
-
     /**
      * Displays the list of contacts with pagination.
      *
-     * @param page The page number for pagination
-     * @param model The model object to hold the contact list
+     * @param page      The page number for pagination
+     * @param model     The model object to hold the contact list
      * @param principal The current authenticated user
      * @return the name of the view (viewContacts)
      */
@@ -228,14 +213,12 @@ public class UserController {
     }
 
 
-
-
     /**
      * Displays the details of a specific contact.
      *
      * @param contact_id The ID of the contact to be displayed
-     * @param model The model object to hold the contact details
-     * @param principal The current authenticated user
+     * @param model      The model object to hold the contact details
+     * @param principal  The current authenticated user
      * @return the name of the view (showContactDetails)
      */
     @GetMapping("/show-contact-details/{contactID}")
@@ -259,15 +242,13 @@ public class UserController {
     }
 
 
-
-
     /**
      * Deletes a contact and its associated image.
      *
      * @param contact_id The ID of the contact to be deleted
-     * @param model The model object
-     * @param principal The current authenticated user
-     * @param session The session object to store messages for the user
+     * @param model      The model object
+     * @param principal  The current authenticated user
+     * @param session    The session object to store messages for the user
      * @return redirect to the contact list page
      */
     @GetMapping("/delete-contact/{contactID}")
@@ -306,21 +287,18 @@ public class UserController {
     }
 
 
-
-
     /**
      * Displays the form to update an existing contact.
      *
      * @param contact_id The ID of the contact to be updated
-     * @param model The model object to hold the contact data
-     * @param principal The current authenticated user
+     * @param model      The model object to hold the contact data
+     * @param principal  The current authenticated user
      * @return the name of the view (updateContact)
      */
     @PostMapping("/update-contact/{contactID}")
     public String updateContact(@PathVariable("contactID") Integer contact_id,
                                 Model model,
-                                Principal principal)  {
-
+                                Principal principal) {
 
 
         String name = principal.getName();
@@ -336,18 +314,16 @@ public class UserController {
     }
 
 
-
-
     /**
      * Processes the form to update the contact information.
      *
-     * @param contact The contact object with updated data
+     * @param contact       The contact object with updated data
      * @param bindingResult Holds validation errors, if any
-     * @param model The model object to hold attributes for the view
-     * @param principal The current authenticated user
-     * @param contactImage The new contact image to be uploaded (if any)
-     * @param contact_id The ID of the contact being updated
-     * @param session The session object to store messages for the user
+     * @param model         The model object to hold attributes for the view
+     * @param principal     The current authenticated user
+     * @param contactImage  The new contact image to be uploaded (if any)
+     * @param contact_id    The ID of the contact being updated
+     * @param session       The session object to store messages for the user
      * @return redirect to the contact details page
      */
     @PostMapping("/process-update-contact")
@@ -387,8 +363,7 @@ public class UserController {
             // Step 2: Upload the new image (if provided)
             if (contactImage.isEmpty()) {
                 existingContact.setContact_image("contactDefault.png");
-            }
-            else if (!contactImage.isEmpty()) {
+            } else if (!contactImage.isEmpty()) {
                 String folderPath = "static/contact_images";
                 File directory = new File(folderPath);
 
@@ -406,7 +381,7 @@ public class UserController {
                 String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
                 // Step 4: Create a new filename with the format "photo_username.jpg"
-                String imgName =  contactID +"_"+ "profile" + fileExtension;
+                String imgName = contactID + "_" + "profile" + fileExtension;
 
                 // Step 5: Set the contact image filename
                 contact.setContact_image(imgName);
@@ -436,12 +411,11 @@ public class UserController {
     }
 
 
-
     /**
      * Processes the form to update the user's profile image.
      *
-     * @param model The model object to hold attributes for the view.
-     * @param principal The current authenticated user.
+     * @param model        The model object to hold attributes for the view.
+     * @param principal    The current authenticated user.
      * @param profileImage The new profile image to be uploaded.
      * @return Redirects to the user's profile page.
      * @throws IOException If an error occurs while handling the file.
@@ -449,7 +423,7 @@ public class UserController {
     @PostMapping("/process-profile-image-form")
     public String profileImageUpdate(Model model,
                                      Principal principal,
-                                    @RequestParam("profileImage") MultipartFile profileImage) throws IOException {
+                                     @RequestParam("profileImage") MultipartFile profileImage) throws IOException {
 
         String name = principal.getName();
         User user = this.userRepo.getUserByName(name);
@@ -466,7 +440,7 @@ public class UserController {
         String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
         // Step 4: Create a new filename with the format "photo_username.jpg"
-        String imgName = userID +"_"+"profile"+ fileExtension;
+        String imgName = userID + "_" + "profile" + fileExtension;
 
         // Step 5: Set the contact image filename
         user.setImage_URL(imgName);
@@ -482,7 +456,7 @@ public class UserController {
 
         this.userRepo.save(user);
 
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
 
 
         return "user/userProfile";

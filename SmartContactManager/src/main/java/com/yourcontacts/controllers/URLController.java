@@ -30,60 +30,55 @@ public class URLController {
     private UserRepository userRepo;
 
 
-
-
     /**
      * Handler for the home page.
+     *
      * @param model Model to hold attributes for the view
      * @return the name of the view (home)
      */
     @GetMapping("/home")
-    public String home(Model model){
+    public String home(Model model) {
         model.addAttribute("title", "SmartConnect");
         return "home";
     }
 
 
-
-
     /**
      * Handler for the about page.
+     *
      * @param model Model to hold attributes for the view
      * @return the name of the view (about)
      */
     @GetMapping("/about")
-    public String about(Model model){
+    public String about(Model model) {
         model.addAttribute("title", "About Us");
         return "about";
     }
 
 
-
-
     /**
      * Handler for the signup page where users can register.
+     *
      * @param model Model to hold attributes for the view
      * @return the name of the view (signup)
      */
     @GetMapping("/signup")
-    public String signup(Model model){
+    public String signup(Model model) {
         model.addAttribute("title", "Register Page");
         model.addAttribute("user", new User());  // Initialize a new user object for the form
         return "signup";
     }
 
 
-
-
-
     /**
      * Handler for registering a new user.
      * This method processes the user registration form submission.
-     * @param user The user object from the form
-     * @param result The binding result to check for validation errors
+     *
+     * @param user      The user object from the form
+     * @param result    The binding result to check for validation errors
      * @param agreement The agreement checkbox value indicating if the user agrees to the terms
-     * @param model Model to hold attributes for the view
-     * @param session HttpSession to set messages for the user
+     * @param model     Model to hold attributes for the view
+     * @param session   HttpSession to set messages for the user
      * @return the name of the view (signup)
      */
     @PostMapping("/register")
@@ -138,14 +133,14 @@ public class URLController {
     }
 
 
-
     /**
      * Handler for the login page.
+     *
      * @param model Model to hold attributes for the view
      * @return the name of the view (login)
      */
     @GetMapping("/signin")
-    public String customLogin(Model model){
+    public String customLogin(Model model) {
         model.addAttribute("title", "Login Page");
         return "login";
     }
