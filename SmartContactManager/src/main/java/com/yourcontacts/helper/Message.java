@@ -18,7 +18,7 @@ public class Message {
      * Constructor to initialize the message with content and type.
      *
      * @param content The message content.
-     * @param type The message type (e.g., success, error, info).
+     * @param type    The message type (e.g., success, error, info).
      */
     public Message(String content, String type) {
         this.content = content;

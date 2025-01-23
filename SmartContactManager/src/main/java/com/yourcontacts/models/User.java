@@ -161,7 +161,7 @@ public class User {
     }
 
     /**
-     * Returns a string representation of the User object.
+     *  Returns a string representation of the User object.
      *
      * @return A string containing the user's details.
      */

@@ -20,7 +20,7 @@ public interface ContactRepository extends JpaRepository<Contacts, Integer> {
      * Custom method to find contacts belonging to a specific user by their user ID.
      * The method uses pagination to retrieve contacts in a paged manner.
      *
-     * @param id The user ID for which contacts are to be fetched.
+     * @param id       The user ID for which contacts are to be fetched.
      * @param pageable Contains information about pagination, including the number of contacts per page and the current page number.
      * @return A Page of Contacts associated with the specified user ID.
      */

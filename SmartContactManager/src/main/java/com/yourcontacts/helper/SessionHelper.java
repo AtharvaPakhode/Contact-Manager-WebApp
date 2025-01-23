@@ -28,7 +28,7 @@ public class SessionHelper {
             // Remove the "message" attribute from the session
             session.removeAttribute("message");
         } catch (Exception e) {
-            // Log the exception for debugging purposes
+            //  Log the exception for debugging purposes
             e.printStackTrace();
         }
     }

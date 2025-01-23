@@ -135,15 +135,15 @@ public class Contacts {
     /**
      * Constructor to initialize all fields of the Contacts class.
      *
-     * @param contact_id The contact's unique ID.
-     * @param contact_name The name of the contact.
-     * @param contact_email The email of the contact.
-     * @param phone_number The phone number of the contact.
+     * @param contact_id       The contact's unique ID.
+     * @param contact_name     The name of the contact.
+     * @param contact_email    The email of the contact.
+     * @param phone_number     The phone number of the contact.
      * @param contact_nickname The nickname of the contact.
-     * @param contact_work The work or occupation of the contact.
-     * @param contact_image The image URL for the contact.
-     * @param user The user associated with the contact.
-     * @param about_contact A description of the contact.
+     * @param contact_work     The work or occupation of the contact.
+     * @param contact_image    The image URL for the contact.
+     * @param user             The user associated with the contact.
+     * @param about_contact    A description of the contact.
      */
     public Contacts(int contact_id, String contact_name, String contact_email, String phone_number, String contact_nickname, String contact_work, String contact_image, User user, String about_contact) {
         this.contact_id = contact_id;
