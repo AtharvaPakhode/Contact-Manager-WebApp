@@ -94,8 +94,6 @@ public class UserController {
         User user = this.userRepo.getUserByName(name);
 
 
-
-
         model.addAttribute("title", "Profile");
 
         return "user/userProfile";
@@ -439,6 +437,15 @@ public class UserController {
 
 
 
+    /**
+     * Processes the form to update the user's profile image.
+     *
+     * @param model The model object to hold attributes for the view.
+     * @param principal The current authenticated user.
+     * @param profileImage The new profile image to be uploaded.
+     * @return Redirects to the user's profile page.
+     * @throws IOException If an error occurs while handling the file.
+     */
     @PostMapping("/process-profile-image-form")
     public String profileImageUpdate(Model model,
                                      Principal principal,

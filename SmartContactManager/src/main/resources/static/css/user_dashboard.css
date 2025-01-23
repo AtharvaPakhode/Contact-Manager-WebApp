@@ -1,39 +1,46 @@
+/* Global Styles */
 body {
-  background-color: #fbfbfb;
+  background-color: #fbfbfb; /* Light gray background for the entire page */
 }
+
 @media (min-width: 991.98px) {
   main {
-    padding-left: 240px;
+    padding-left: 240px; /* Add left padding for larger screens to accommodate the sidebar */
   }
 }
 
-/* Sidebar */
+/* Sidebar Styles */
 .sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding: 58px 0 0; /* Height of navbar */
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
-  z-index: 600;
+  position: fixed; /* Fix the sidebar to the viewport */
+  top: 0; /* Align to the top */
+  bottom: 0; /* Stretch to the bottom */
+  left: 0; /* Align to the left */
+  padding: 58px 0 0; /* Add padding to account for the height of the navbar */
+  box-shadow: 
+    0 2px 5px 0 rgb(0 0 0 / 5%), /* Subtle shadow for depth */
+    0 2px 10px 0 rgb(0 0 0 / 5%);
+  width: 240px; /* Fixed width for the sidebar */
+  z-index: 600; /* Ensure the sidebar appears above most elements */
 }
 
 @media (max-width: 991.98px) {
   .sidebar {
-    width: 100%;
+    width: 100%; /* Sidebar takes full width on smaller screens */
   }
 }
+
 .sidebar .active {
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  border-radius: 5px; /* Slight rounding for active items */
+  box-shadow: 
+    0 2px 5px 0 rgb(0 0 0 / 16%), /* Shadow for active item for emphasis */
+    0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
 .sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: 0.5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  position: relative; /* Position relative to its container */
+  top: 0; /* Start at the top */
+  height: calc(100vh - 48px); /* Full height minus header height */
+  padding-top: 0.5rem; /* Small padding at the top */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling for overflow content */
 }
